@@ -19,3 +19,4 @@ env/
 # --- Archivos del sistema ---
 .DS_Store
 Thumbs.db
+credentials.json
