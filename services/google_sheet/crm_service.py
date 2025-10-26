@@ -24,7 +24,7 @@ gc = gspread.authorize(creds)
 
 class CRMService:
     """
-    Servicio para gestionar operaciones del CRM en Google Sheets.
+    Servicio para gestionar operacioness del CRM en Google Sheets.
 
     Estructura de la hoja:
     Columna 1: Id
