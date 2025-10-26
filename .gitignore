@@ -1,0 +1,21 @@
+# --- Archivos sensibles ---
+credentials.json
+.env
+
+# --- Archivos temporales / locales ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# --- Configuración del entorno ---
+.venv/
+venv/
+env/
+.idea/
+.vscode/
+
+# --- Archivos del sistema ---
+.DS_Store
+Thumbs.db
