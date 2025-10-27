@@ -23,3 +23,5 @@ env/
 Thumbs.db
 credentials.json
 .env
+token.json
+meet-credentials.json
