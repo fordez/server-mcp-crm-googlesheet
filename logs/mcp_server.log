@@ -947,3 +947,256 @@ TypeError: CRMService.update_client() got an unexpected keyword argument 'nota'
 2025-10-26 11:11:22,527 - INFO - ✏️ LLAMADA A update_client_interest | client_id: mK6qbU
 2025-10-26 11:11:23,948 - INFO - 📤 RESPUESTA update_client_interest: success=True, updated_fields=['Estado', 'Nota']
 2025-10-26 11:16:28,426 - INFO - StreamableHTTP session manager shutting down
+2025-10-26 11:52:59,981 - INFO - StreamableHTTP session manager started
+2025-10-26 11:53:36,426 - INFO - Created new transport with session ID: 1bea9237eb104dc7928916ec9c668db5
+2025-10-26 11:53:37,612 - INFO - Processing request of type ListToolsRequest
+2025-10-26 11:54:04,011 - INFO - Created new transport with session ID: 79bf4e5be909469fa8c8398d30e5693a
+2025-10-26 11:54:05,305 - INFO - Processing request of type ListToolsRequest
+2025-10-26 11:55:20,874 - INFO - Created new transport with session ID: bfe9f66833f6418f9651349f10883130
+2025-10-26 11:55:22,208 - INFO - Processing request of type ListToolsRequest
+2025-10-26 11:55:24,152 - INFO - Processing request of type CallToolRequest
+2025-10-26 11:55:24,157 - INFO - 🔍 LLAMADA A verify_client | tel: 573146964611, correo: None, usuario: None
+2025-10-26 11:55:26,070 - INFO - 📤 RESPUESTA verify_client: exists=True, id=Q6tAyj
+2025-10-26 11:55:26,072 - INFO - Processing request of type CallToolRequest
+2025-10-26 11:55:26,073 - INFO - 🔍 LLAMADA A get_all_services
+2025-10-26 11:55:26,888 - INFO - 📤 RESPUESTA get_all_services: success=False
+2025-10-26 11:59:40,028 - INFO - StreamableHTTP session manager shutting down
+2025-10-26 11:59:43,469 - INFO - StreamableHTTP session manager started
+2025-10-26 12:00:02,069 - INFO - Created new transport with session ID: e0eb98bde96e45508f9d4da1df92d122
+2025-10-26 12:00:03,252 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:00:05,650 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:00:05,658 - INFO - 🔍 LLAMADA A verify_client | tel: 573146964611, correo: None, usuario: None
+2025-10-26 12:00:07,699 - INFO - 📤 RESPUESTA verify_client: exists=True, id=Q6tAyj
+2025-10-26 12:00:47,760 - INFO - Created new transport with session ID: 64de164b6abc4011a65284a29224f371
+2025-10-26 12:00:48,933 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:00:50,400 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:00:50,414 - INFO - 🔍 LLAMADA A verify_client | tel: 573146964611, correo: None, usuario: None
+2025-10-26 12:00:51,628 - INFO - 📤 RESPUESTA verify_client: exists=True, id=Q6tAyj
+2025-10-26 12:00:53,576 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:00:53,582 - INFO - ✏️ LLAMADA A update_client_note | client_id: Q6tAyj
+2025-10-26 12:00:55,064 - INFO - 📤 RESPUESTA update_client_note: success=True, updated_fields=['Nota']
+2025-10-26 12:00:56,964 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:00:56,970 - INFO - 🔄 LLAMADA A update_client_status | client_id: Q6tAyj, estado: Interesado
+2025-10-26 12:00:58,080 - INFO - 📤 RESPUESTA update_client_status: success=True, updated_fields=['Estado']
+2025-10-26 12:00:59,578 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:00:59,580 - INFO - 🔍 LLAMADA A get_all_services
+2025-10-26 12:01:00,520 - INFO - 📤 RESPUESTA get_all_services: success=False
+2025-10-26 12:04:32,606 - INFO - StreamableHTTP session manager shutting down
+2025-10-26 12:04:35,002 - INFO - StreamableHTTP session manager started
+2025-10-26 12:05:00,258 - INFO - Created new transport with session ID: 574c0a5382054459be6bba4b4b30725a
+2025-10-26 12:05:01,442 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:05:29,872 - INFO - Created new transport with session ID: d4d9eb1e5fd445c0bfe23ef17bf1b7d6
+2025-10-26 12:05:31,138 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:05:46,348 - INFO - Created new transport with session ID: 734691711d6248f18e27159a1583d2ae
+2025-10-26 12:05:47,671 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:20:57,365 - INFO - Created new transport with session ID: 41e85b84062a4d7e9060834f4e68dcf2
+2025-10-26 12:20:58,583 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:20:59,959 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:20:59,965 - INFO - 🔍 LLAMADA A verify_client | tel: 573154562556, correo: None, usuario: None
+2025-10-26 12:21:02,209 - INFO - 📤 RESPUESTA verify_client: exists=False, id=None
+2025-10-26 12:21:04,301 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:21:04,316 - INFO - ✨ LLAMADA A create_client | nombre: Carlos, canal: web
+2025-10-26 12:21:09,684 - INFO - 📤 RESPUESTA create_client: success=True, id=T9tbC7
+2025-10-26 12:21:33,175 - INFO - Created new transport with session ID: 246c7df717004465ae7636d048a22374
+2025-10-26 12:21:34,574 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:21:35,931 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:21:35,953 - INFO - 🔍 LLAMADA A verify_client | tel: 573154562556, correo: None, usuario: None
+2025-10-26 12:21:37,229 - INFO - 📤 RESPUESTA verify_client: exists=True, id=T9tbC7
+2025-10-26 12:21:55,970 - INFO - Created new transport with session ID: b28e161fced14e528c9d9c6c8387e318
+2025-10-26 12:21:57,509 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:22:08,875 - INFO - Created new transport with session ID: 0659e8211d314d5f92d42639a9035e00
+2025-10-26 12:22:10,053 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:22:26,818 - INFO - Created new transport with session ID: daa5c9b7cd624c39872b07afb88a9f2f
+2025-10-26 12:22:27,975 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:22:29,000 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:22:29,012 - INFO - 🔍 LLAMADA A verify_client | tel: 573154562556, correo: None, usuario: None
+2025-10-26 12:22:30,032 - INFO - 📤 RESPUESTA verify_client: exists=True, id=T9tbC7
+2025-10-26 12:22:32,835 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:22:32,837 - INFO - ✏️ LLAMADA A update_client_note | client_id: T9tbC7
+2025-10-26 12:22:34,368 - INFO - 📤 RESPUESTA update_client_note: success=True, updated_fields=['Nota']
+2025-10-26 12:22:34,372 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:22:34,374 - INFO - 🔄 LLAMADA A update_client_status | client_id: T9tbC7, estado: Interesado
+2025-10-26 12:22:35,654 - INFO - 📤 RESPUESTA update_client_status: success=True, updated_fields=['Estado']
+2025-10-26 12:38:18,025 - INFO - Created new transport with session ID: cbbc0a3de58c42859655e19a3b684884
+2025-10-26 12:38:19,434 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:43:32,059 - INFO - Created new transport with session ID: b3ae9b1fccc641e0b898ef83ce20ff40
+2025-10-26 12:43:33,241 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:43:35,968 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:43:35,971 - INFO - 🔍 LLAMADA A get_all_services
+2025-10-26 12:43:37,995 - INFO - 📤 RESPUESTA get_all_services: success=True
+2025-10-26 12:43:37,999 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:43:38,007 - INFO - 🔍 LLAMADA A verify_client | tel: 573146964611, correo: None, usuario: None
+2025-10-26 12:43:39,172 - INFO - 📤 RESPUESTA verify_client: exists=True, id=Q6tAyj
+2025-10-26 12:44:08,308 - INFO - Created new transport with session ID: 26812ee6a257420d8794c24330c87547
+2025-10-26 12:44:09,639 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:44:19,470 - INFO - Created new transport with session ID: ec42e9bc95aa41719fcd9a3e21dd6531
+2025-10-26 12:44:20,632 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:44:33,564 - INFO - Created new transport with session ID: 976eb42cab1e4035997b18787489a9c8
+2025-10-26 12:44:34,804 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:44:36,366 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:44:36,367 - INFO - 🔍 LLAMADA A get_all_services
+2025-10-26 12:44:37,490 - INFO - 📤 RESPUESTA get_all_services: success=True
+2025-10-26 12:45:40,196 - INFO - Created new transport with session ID: dacc01eb5f164c5fa4c68513d52c64d9
+2025-10-26 12:45:41,459 - INFO - Processing request of type ListToolsRequest
+2025-10-26 12:45:43,130 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:45:43,137 - INFO - 🔍 LLAMADA A verify_client | tel: 573146964611, correo: None, usuario: None
+2025-10-26 12:45:43,958 - INFO - 📤 RESPUESTA verify_client: exists=True, id=Q6tAyj
+2025-10-26 12:45:43,960 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:45:43,963 - INFO - 🔍 LLAMADA A get_all_services
+2025-10-26 12:45:44,929 - INFO - 📤 RESPUESTA get_all_services: success=True
+2025-10-26 12:45:47,305 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:45:47,306 - INFO - ✏️ LLAMADA A update_client_note | client_id: Q6tAyj
+2025-10-26 12:45:48,311 - INFO - 📤 RESPUESTA update_client_note: success=True, updated_fields=['Nota']
+2025-10-26 12:45:50,005 - INFO - Processing request of type CallToolRequest
+2025-10-26 12:45:50,006 - INFO - 🔄 LLAMADA A update_client_status | client_id: Q6tAyj, estado: Interesado
+2025-10-26 12:45:51,019 - INFO - 📤 RESPUESTA update_client_status: success=True, updated_fields=['Estado']
+2025-10-26 19:03:05,541 - INFO - StreamableHTTP session manager shutting down
+2025-10-27 12:27:20,039 - INFO - StreamableHTTP session manager started
+2025-10-27 12:28:37,937 - INFO - StreamableHTTP session manager shutting down
+2025-10-27 12:28:40,600 - INFO - StreamableHTTP session manager started
+2025-10-27 12:29:04,481 - INFO - StreamableHTTP session manager shutting down
+2025-10-27 12:30:29,843 - INFO - StreamableHTTP session manager started
+2025-10-27 12:31:29,990 - INFO - StreamableHTTP session manager shutting down
+2025-10-27 12:31:33,537 - INFO - StreamableHTTP session manager started
+2025-10-27 12:44:11,310 - INFO - StreamableHTTP session manager shutting down
+2025-10-27 12:44:57,200 - INFO - StreamableHTTP session manager started
+2025-10-27 12:49:40,590 - INFO - Created new transport with session ID: bb2e6446b1d1402f9411d133720ad751
+2025-10-27 12:49:41,343 - INFO - Processing request of type ListToolsRequest
+2025-10-27 12:49:41,810 - INFO - Created new transport with session ID: 79a776bc09b84e2b8e3be1f89d7f8a48
+2025-10-27 12:49:42,394 - INFO - Processing request of type ListToolsRequest
+2025-10-27 12:49:47,130 - INFO - Created new transport with session ID: 99fc16aed9684a84902384790e336cc7
+2025-10-27 12:49:47,788 - INFO - Processing request of type ListToolsRequest
+2025-10-27 12:55:51,258 - INFO - Created new transport with session ID: dde07b77a7384aeb926af883187b1459
+2025-10-27 12:55:51,939 - INFO - Processing request of type ListToolsRequest
+2025-10-27 12:58:18,924 - INFO - Created new transport with session ID: cd3684d2fdb748ba86c8c621f1ea4250
+2025-10-27 12:58:19,672 - INFO - Processing request of type ListToolsRequest
+2025-10-27 12:58:22,403 - INFO - Processing request of type CallToolRequest
+2025-10-27 12:58:22,420 - INFO - ✨ LLAMADA A create_client | nombre: joa, canal: chat
+2025-10-27 12:58:27,994 - INFO - 📤 RESPUESTA create_client: success=False, id=None
+2025-10-27 12:58:46,572 - INFO - Created new transport with session ID: d5fd678dde4241549d91cfb8eed368e5
+2025-10-27 12:58:47,249 - INFO - Processing request of type ListToolsRequest
+2025-10-27 12:59:10,010 - INFO - Created new transport with session ID: bb79c111644c45589c04f157757483a3
+2025-10-27 12:59:10,661 - INFO - Processing request of type ListToolsRequest
+2025-10-27 12:59:21,613 - INFO - Created new transport with session ID: d770accbec714b19ad21b9b24981f252
+2025-10-27 12:59:22,319 - INFO - Processing request of type ListToolsRequest
+2025-10-27 12:59:35,397 - INFO - Created new transport with session ID: c9a7271080094d3c8714faaa7d67228e
+2025-10-27 12:59:36,057 - INFO - Processing request of type ListToolsRequest
+2025-10-27 12:59:38,688 - INFO - Processing request of type CallToolRequest
+2025-10-27 12:59:38,690 - INFO - 🔍 LLAMADA A get_service_by_name | service_name=Desarrollo web
+2025-10-27 12:59:39,187 - INFO - 📤 RESPUESTA get_service_by_name: success=False
+2025-10-27 13:00:20,314 - INFO - Created new transport with session ID: 6c660d1587e7466eaa8f7f54aa658283
+2025-10-27 13:00:21,111 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:00:23,022 - INFO - Processing request of type CallToolRequest
+2025-10-27 13:00:23,026 - INFO - 🕓 LLAMADA A calendar_check_availability
+2025-10-27 13:06:30,322 - INFO - "GET /?state=nO2O5Gd0iLuIWFNc6ESiiu1uMmXyrG&code=4/0Ab32j9048oOWYFGJoupKvFf3Pm5s89D6GuGRZMqEIMlLWRclWwcQvjdp8NVKmPRxOrWaPw&scope=https://www.googleapis.com/auth/meetings.space.created%20https://www.googleapis.com/auth/calendar.events%20https://www.googleapis.com/auth/calendar.readonly%20https://www.googleapis.com/auth/calendar HTTP/1.1" 200 65
+2025-10-27 13:06:31,040 - INFO - 🔐 Nuevo token guardado correctamente.
+2025-10-27 13:06:31,045 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-10-27 13:06:32,362 - INFO - 📤 RESPUESTA calendar_check_availability enviada.
+2025-10-27 13:06:32,365 - INFO - Warning: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+2025-10-27 13:07:31,242 - INFO - Created new transport with session ID: e3fe7a12bf4e47c0831d9c8be1ef681b
+2025-10-27 13:07:31,987 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:07:33,190 - INFO - Processing request of type CallToolRequest
+2025-10-27 13:07:33,193 - INFO - 🕓 LLAMADA A calendar_check_availability
+2025-10-27 13:07:33,194 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-10-27 13:07:34,306 - INFO - 📤 RESPUESTA calendar_check_availability enviada.
+2025-10-27 13:08:05,649 - INFO - Created new transport with session ID: 6eafef47c8f54e8ebd16f9d019750235
+2025-10-27 13:08:06,399 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:08:10,051 - INFO - Processing request of type CallToolRequest
+2025-10-27 13:08:10,056 - INFO - 📅 LLAMADA A calendar_create_meet | summary=Reunión con Joa
+2025-10-27 13:09:02,791 - INFO - StreamableHTTP session manager shutting down
+2025-10-27 13:12:20,317 - INFO - StreamableHTTP session manager started
+2025-10-27 13:13:05,060 - INFO - Created new transport with session ID: ae389bf35ad54aaaa4382b62913d3ba4
+2025-10-27 13:13:06,425 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:14:31,813 - INFO - Created new transport with session ID: 5d2811b090904d26adbcd617d6a54543
+2025-10-27 13:14:32,527 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:14:33,726 - INFO - Processing request of type CallToolRequest
+2025-10-27 13:14:33,733 - INFO - 🔍 LLAMADA A verify_client | tel: None, correo: None, usuario: fernando
+2025-10-27 13:14:34,223 - INFO - 📤 RESPUESTA verify_client: exists=None, id=None
+2025-10-27 13:14:46,151 - INFO - Created new transport with session ID: 36f4d8e888264c1686f1288451cb3426
+2025-10-27 13:14:46,810 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:15:05,177 - INFO - Created new transport with session ID: ae1a6c504eef45f6aea4f91750baabe9
+2025-10-27 13:15:05,874 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:15:12,390 - INFO - Created new transport with session ID: e755582c43ac4d06846034f2dbbc6845
+2025-10-27 13:15:13,110 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:15:21,726 - INFO - Created new transport with session ID: be1e65e911794f3892773cb26e22f0fc
+2025-10-27 13:15:22,419 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:16:00,669 - INFO - Created new transport with session ID: a86e25e18b7840fdb746aa84e37f0149
+2025-10-27 13:16:01,543 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:16:03,961 - INFO - Processing request of type CallToolRequest
+2025-10-27 13:16:03,981 - INFO - ✨ LLAMADA A create_client | nombre: fernando, canal: chat
+2025-10-27 13:16:04,102 - INFO - 📤 RESPUESTA create_client: success=False, id=None
+2025-10-27 13:16:04,106 - INFO - Processing request of type CallToolRequest
+2025-10-27 13:16:04,112 - INFO - 📅 LLAMADA A calendar_create_meet | summary=Reunión con Fernando sobre desarrollo de agente AI
+2025-10-27 13:16:04,118 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-10-27 13:16:05,387 - INFO - ✅ Evento creado: https://www.google.com/calendar/event?eid=bXVsaHQyNmpwZHJvM3J2dmx1azFoNjFhNm8gZm9yZGV6Y29udGFjdG9AbQ
+2025-10-27 13:22:15,424 - INFO - Created new transport with session ID: 218f0ee3d6ea4bd4a2de9da26c633e1c
+2025-10-27 13:22:16,092 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:22:17,923 - INFO - Processing request of type CallToolRequest
+2025-10-27 13:22:17,926 - INFO - 📄 LLAMADA A calendar_get_event_details | event_id=bXVsaHQyNmpwZHJvM3J2dmx1azFoNjFhNm8gZm9yemNvb...
+2025-10-27 13:22:17,928 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-10-27 13:35:22,922 - INFO - Created new transport with session ID: 9c177242637a42b1a1940b1cd8b9cd45
+2025-10-27 13:35:23,601 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:35:26,263 - INFO - Processing request of type CallToolRequest
+2025-10-27 13:35:26,265 - INFO - 📄 LLAMADA A calendar_get_event_details | event_id=bDQ2NTI1OGZobTYyb3JhZ2xsM2dnNDFodW8gYmM5NDJiZGNmYzk2NzM2MjU5NmMzZTYzNGNjYTcwZmM0ZDRiZWEzZTE1MDI3YjZmMTRmN2M3YjFlNGU4ZjVjNEBn
+2025-10-27 13:35:26,266 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-10-27 13:45:41,797 - INFO - Created new transport with session ID: 44ff7d0a302e491f9c7ace0e7ef92b66
+2025-10-27 13:45:42,552 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:45:47,037 - INFO - Processing request of type CallToolRequest
+2025-10-27 13:45:47,039 - INFO - 📄 LLAMADA A calendar_get_event_details | event_id=bDQ2NTI1OGZobTYyb3JhZ2xsM2dnNDFodW8gYmM5NDJiZGNmYzk2NzM2MjU5NmMzZTYzNGNjYTcwZmM0ZDRiZWEzZTE1MDI3YjZmMTRmN2M3YjFlNGU4ZjVjNEBn
+2025-10-27 13:45:47,041 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-10-27 13:45:51,300 - INFO - StreamableHTTP session manager shutting down
+2025-10-27 13:45:54,357 - INFO - StreamableHTTP session manager started
+2025-10-27 13:45:59,727 - INFO - Created new transport with session ID: 2a104671d6014cbfba7a3de88eea14fe
+2025-10-27 13:46:00,646 - INFO - Processing request of type ListToolsRequest
+2025-10-27 13:46:03,080 - INFO - Processing request of type CallToolRequest
+2025-10-27 13:46:03,082 - INFO - 📄 LLAMADA A calendar_get_event_details | event_id=bDQ2NTI1OGZobTYyb3JhZ2xsM2dnNDFodW8gYmM5NDJiZGNmYzk2NzM2MjU5NmMzZTYzNGNjYTcwZmM0ZDRiZWEzZTE1MDI3YjZmMTRmN2M3YjFlNGU4ZjVjNEBn
+2025-10-27 13:46:03,088 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-10-27 13:46:10,750 - INFO - StreamableHTTP session manager shutting down
+2025-10-27 14:02:43,062 - INFO - StreamableHTTP session manager started
+2025-10-27 14:03:02,335 - INFO - Created new transport with session ID: 9ef9cca17777480fb8862708d941249b
+2025-10-27 14:03:03,124 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:03:33,875 - INFO - Created new transport with session ID: 43585a1ddedd4f2f8a90619dd598b7f9
+2025-10-27 14:03:34,586 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:03:35,895 - INFO - Processing request of type CallToolRequest
+2025-10-27 14:03:35,902 - INFO - 🔍 LLAMADA A verify_client | tel: 3124589645, correo: None, usuario: None
+2025-10-27 14:03:36,437 - INFO - 📤 RESPUESTA verify_client: exists=None, id=None
+2025-10-27 14:03:48,118 - INFO - Created new transport with session ID: 4d8e44ce291e4f9d94c430fc554ea9fa
+2025-10-27 14:03:48,786 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:03:49,618 - INFO - Processing request of type CallToolRequest
+2025-10-27 14:03:49,623 - INFO - 🔍 LLAMADA A verify_client | tel: 3124589645, correo: None, usuario: None
+2025-10-27 14:03:49,746 - INFO - 📤 RESPUESTA verify_client: exists=None, id=None
+2025-10-27 14:03:50,938 - INFO - Processing request of type CallToolRequest
+2025-10-27 14:03:50,952 - INFO - ✨ LLAMADA A create_client | nombre: Isabela, canal: chat
+2025-10-27 14:03:51,064 - INFO - 📤 RESPUESTA create_client: success=False, id=None
+2025-10-27 14:04:12,244 - INFO - Created new transport with session ID: 70d9305db2f940e89c21d4b19d5ce9e3
+2025-10-27 14:04:13,128 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:04:27,840 - INFO - Created new transport with session ID: 1e8ca7bcfd54424abc9617ce90cb67dd
+2025-10-27 14:04:28,626 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:04:34,358 - INFO - Created new transport with session ID: 7445382a21c0442baa585832c71ce93a
+2025-10-27 14:04:35,099 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:04:43,983 - INFO - Created new transport with session ID: cde67f434c414bd2a467a464ddc1fb42
+2025-10-27 14:04:44,728 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:05:09,437 - INFO - Created new transport with session ID: e9d6533e74c34264be5b64c8af91ab60
+2025-10-27 14:05:10,222 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:05:11,690 - INFO - Processing request of type CallToolRequest
+2025-10-27 14:05:11,691 - INFO - 🕓 LLAMADA A calendar_check_availability
+2025-10-27 14:05:11,696 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-10-27 14:05:13,250 - INFO - 📤 RESPUESTA calendar_check_availability enviada.
+2025-10-27 14:05:34,637 - INFO - Created new transport with session ID: e960c75b07144bfa839180b8591bfd10
+2025-10-27 14:05:35,420 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:05:56,146 - INFO - Created new transport with session ID: 79dc835297ea4f318d6bf7d59d6cb627
+2025-10-27 14:05:56,816 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:06:10,718 - INFO - Created new transport with session ID: 53084d1d63e747628cb0bbf7ea5c0a12
+2025-10-27 14:06:11,429 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:06:22,936 - INFO - Created new transport with session ID: 8d0f888b15a746b9a0526aef0e43dea6
+2025-10-27 14:06:23,637 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:06:30,784 - INFO - Created new transport with session ID: 7e01df04e9bb4e6da02c7dd98ac23f4e
+2025-10-27 14:06:31,525 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:06:33,557 - INFO - Processing request of type CallToolRequest
+2025-10-27 14:06:33,578 - INFO - 📅 LLAMADA A calendar_create_meet | summary=Reunión con Isabela para desarrollo web
+2025-10-27 14:06:34,350 - INFO - ✅ Evento creado: https://www.google.com/calendar/event?eid=ajA5azY0cXUzbmJzZ2VrdTRwY2c0ZnNnMXMgZm9yZGV6Y29udGFjdG9AbQ
+2025-10-27 14:10:05,685 - INFO - Created new transport with session ID: 3d41110a72e3424b9e7a646052954431
+2025-10-27 14:10:06,367 - INFO - Processing request of type ListToolsRequest
+2025-10-27 14:10:08,177 - INFO - Processing request of type CallToolRequest
+2025-10-27 14:10:08,181 - INFO - 📄 LLAMADA A calendar_get_event_details | event_id=ajA5azY0cXUzbmJzZ2VrdTRwY2c0ZnNnMXMgZm9yZGV6Y29udGFjdG9AbQ
+2025-10-27 14:10:19,068 - INFO - StreamableHTTP session manager shutting down
