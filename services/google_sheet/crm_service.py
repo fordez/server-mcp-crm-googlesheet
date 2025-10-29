@@ -20,29 +20,45 @@ gc = gspread.authorize(creds)
 
 class CRMService:
     @staticmethod
-    def verify_client(
-        telefono: str = None, correo: str = None, usuario: str = None
-    ) -> dict:
-        """Verifica si un cliente existe."""
+    def resolve_client_id(client_id_or_phone: str) -> str | None:
+        """
+        Resuelve el client_id real a partir de un UUID o un teléfono.
+        Retorna el client_id si existe, sino None.
+        """
+        if not client_id_or_phone:
+            return None
+
+        sh = gc.open_by_key(SPREADSHEET_ID)
+        worksheet = sh.worksheet(SHEET_NAME)
+        all_records = worksheet.get_all_records()
+        phone_norm = "".join(filter(str.isdigit, str(client_id_or_phone)))
+
+        for row in all_records:
+            if str(row.get("Id")) == str(client_id_or_phone):
+                return row.get("Id")
+            if "".join(filter(str.isdigit, str(row.get("Telefono")))) == phone_norm:
+                return row.get("Id")
+        return None
+
+    @staticmethod
+    def verify_client(telefono=None, correo=None, usuario=None) -> dict:
         try:
             if not telefono and not correo and not usuario:
-                return {
-                    "error": "Debe proporcionar al menos un identificador: telefono, correo o usuario"
-                }
-
-            def normalize_phone(phone: str) -> str:
-                return "".join(filter(str.isdigit, str(phone))) if phone else ""
+                return {"error": "Debe proporcionar al menos un identificador"}
 
             sh = gc.open_by_key(SPREADSHEET_ID)
             worksheet = sh.worksheet(SHEET_NAME)
             all_records = worksheet.get_all_records()
-            telefono_normalizado = normalize_phone(telefono)
+            telefono_norm = (
+                "".join(filter(str.isdigit, str(telefono))) if telefono else ""
+            )
 
             for row in all_records:
                 matched_by = None
                 if (
                     telefono
-                    and normalize_phone(row.get("Telefono")) == telefono_normalizado
+                    and "".join(filter(str.isdigit, str(row.get("Telefono"))))
+                    == telefono_norm
                 ):
                     matched_by = "telefono"
                 elif correo and str(row.get("Correo")).lower() == str(correo).lower():
@@ -72,14 +88,8 @@ class CRMService:
 
     @staticmethod
     def create_client(
-        nombre: str,
-        canal: str,
-        telefono: str = None,
-        correo: str = None,
-        nota: str = None,
-        usuario: str = None,
+        nombre, canal, telefono=None, correo=None, nota=None, usuario=None
     ) -> dict:
-        """Crea un nuevo cliente (lead)."""
         try:
             if not nombre or not canal:
                 return {
@@ -90,7 +100,6 @@ class CRMService:
             sh = gc.open_by_key(SPREADSHEET_ID)
             worksheet = sh.worksheet(SHEET_NAME)
             all_records = worksheet.get_all_records()
-
             tz = pytz.timezone(TIMEZONE)
             fecha_actual = datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
             client_id = shortuuid.ShortUUID().random(length=6)
@@ -119,69 +128,18 @@ class CRMService:
             return {"success": False, "error": str(e)}
 
     @staticmethod
-    def update_client(
-        client_id: str,
-        nombre: str = None,
-        telefono: str = None,
-        correo: str = None,
-        tipo: str = None,
-        usuario: str = None,
-        fecha_conversion: str = None,
-    ) -> dict:
-        """Actualiza solo datos generales, sin tocar estado ni nota."""
-        try:
-            if not client_id:
-                return {"success": False, "error": "El campo 'client_id' es requerido"}
-
-            sh = gc.open_by_key(SPREADSHEET_ID)
-            worksheet = sh.worksheet(SHEET_NAME)
-            all_records = worksheet.get_all_records()
-            updated_fields = []
-
-            for idx, row in enumerate(all_records, start=2):
-                if str(row.get("Id")) == str(client_id):
-                    if nombre:
-                        worksheet.update_cell(idx, 2, nombre)
-                        updated_fields.append("Nombre")
-                    if telefono:
-                        worksheet.update_cell(idx, 3, telefono)
-                        updated_fields.append("Telefono")
-                    if correo:
-                        worksheet.update_cell(idx, 4, correo)
-                        updated_fields.append("Correo")
-                    if tipo:
-                        worksheet.update_cell(idx, 5, tipo)
-                        updated_fields.append("Tipo")
-                    if usuario:
-                        worksheet.update_cell(idx, 8, usuario)
-                        updated_fields.append("Usuario")
-                    if fecha_conversion:
-                        worksheet.update_cell(idx, 11, fecha_conversion)
-                        updated_fields.append("Fecha Conversion")
-                    return {
-                        "success": True,
-                        "client_id": client_id,
-                        "updated_fields": updated_fields,
-                    }
-
-            return {
-                "success": False,
-                "error": f"Cliente con ID '{client_id}' no encontrado",
-            }
-
-        except Exception as e:
-            return {"success": False, "error": str(e)}
-
-    @staticmethod
     def update_client_dynamic(client_id: str, fields: dict) -> dict:
-        """Actualiza cualquier campo dinámicamente según el diccionario `fields`."""
         try:
             if not client_id:
-                return {"success": False, "error": "El campo 'client_id' es requerido"}
+                return {"success": False, "error": "client_id requerido"}
             if not fields:
+                return {"success": False, "error": "No se proporcionaron campos"}
+
+            resolved_id = CRMService.resolve_client_id(client_id)
+            if not resolved_id:
                 return {
                     "success": False,
-                    "error": "No se proporcionaron campos para actualizar",
+                    "error": f"No se encontró cliente con ID o teléfono '{client_id}'",
                 }
 
             sh = gc.open_by_key(SPREADSHEET_ID)
@@ -189,7 +147,6 @@ class CRMService:
             all_records = worksheet.get_all_records()
             updated_fields = []
 
-            # Mapeo de columnas
             col_map = {
                 "Id": 1,
                 "Nombre": 2,
@@ -205,7 +162,7 @@ class CRMService:
             }
 
             for idx, row in enumerate(all_records, start=2):
-                if str(row.get("Id")) == str(client_id):
+                if str(row.get("Id")) == str(resolved_id):
                     for key, value in fields.items():
                         col = col_map.get(key)
                         if col:
@@ -213,13 +170,13 @@ class CRMService:
                             updated_fields.append(key)
                     return {
                         "success": True,
-                        "client_id": client_id,
+                        "client_id": resolved_id,
                         "updated_fields": updated_fields,
                     }
 
             return {
                 "success": False,
-                "error": f"Cliente con ID '{client_id}' no encontrado",
+                "error": f"Cliente con ID '{resolved_id}' no encontrado",
             }
 
         except Exception as e:
