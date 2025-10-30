@@ -2,7 +2,8 @@ from fastmcp import FastMCP, Context
 from fastmcp.server.dependencies import get_context
 from services.google_sheet.crm_service import CRMService
 from services.google_sheet.catalog_service import CatalogService
-from services.google_sheet.meeting_service import MeetingService  # 👈 NUEVO
+from services.google_sheet.meeting_service import MeetingService
+from services.google_sheet.project_service import ProjectService  # 👈 NUEVO
 from services.google_calendar_meet.calendar_service import CalendarService
 import os
 import logging
@@ -33,7 +34,7 @@ logger = logging.getLogger(__name__)
 # ====================================================
 # 🚀 Inicializar MCP
 # ====================================================
-mcp = FastMCP(name="CRM + Catalog + Meetings Server")
+mcp = FastMCP(name="CRM + Catalog + Meetings + Projects Server")
 
 
 # ====================================================
@@ -49,7 +50,8 @@ async def verify_client(
 ) -> dict:
     """
     Verifica si un cliente existe en el CRM usando teléfono, correo o usuario.
-    Retorna información completa del cliente si se encuentra.
+    Retorna información completa del cliente si se encuentra, incluyendo fechas de creación,
+    conversión y thread_id.
     """
     ctx = ctx or get_context()
     logger.info(
@@ -72,13 +74,17 @@ async def create_client(
     correo: Optional[str] = None,
     nota: Optional[str] = None,
     usuario: Optional[str] = None,
+    thread_id: Optional[str] = None,
     ctx: Context = None,
 ) -> dict:
     """
     Crea un nuevo cliente en el CRM.
+    Incluye soporte para Thread_Id para vincular conversaciones.
     """
     ctx = ctx or get_context()
-    logger.info(f"✨ create_client | nombre={nombre}, canal={canal}")
+    logger.info(
+        f"✨ create_client | nombre={nombre}, canal={canal}, thread_id={thread_id}"
+    )
     result = CRMService.create_client(
         nombre=nombre,
         canal=canal,
@@ -86,6 +92,7 @@ async def create_client(
         correo=correo,
         nota=nota,
         usuario=usuario,
+        thread_id=thread_id,
     )
     logger.info(f"📤 create_client response: {result}")
     return {"success": True, "data": result}
@@ -103,8 +110,10 @@ async def update_client(
 ) -> dict:
     """
     Actualiza cualquier campo dinámicamente usando un diccionario `fields`.
-    Ejemplo de fields: {"Nombre": "Juan", "Telefono": "123456"}
+    Ejemplo de fields: {"Nombre": "Juan", "Telefono": "123456", "Thread_Id": "thread_abc123"}
     El `client_id` puede ser UUID interno o el teléfono del cliente.
+    Campos disponibles: Nombre, Telefono, Correo, Tipo, Estado, Nota, Usuario, Canal,
+    Fecha Creacion, Fecha Conversion, Thread_Id
     """
     ctx = ctx or get_context()
     logger.info(f"🔄 update_client | client_id={client_id}, fields={fields}")
@@ -399,9 +408,9 @@ async def update_meeting_sheet(
     Args:
         meeting_id: ID de la reunión a actualizar
         fields: Diccionario con los campos a actualizar
-               Campos disponibles: "Asunto", "Detalles", "Fecha Inicio",
-               "Meet", "Calendar", "Estado", "Id Cliente"
-               Ejemplo: {"Estado": "Completada", "Meet": "https://meet.google.com/xyz"}
+            Campos disponibles: "Asunto", "Detalles", "Fecha Inicio",
+            "Meet", "Calendar", "Estado", "Id Cliente"
+            Ejemplo: {"Estado": "Completada", "Meet": "https://meet.google.com/xyz"}
     """
     ctx = ctx or get_context()
     logger.info(f"🔄 update_meeting | meeting_id={meeting_id}, fields={fields}")
@@ -441,6 +450,219 @@ async def delete_meeting_sheet(meeting_id: str, ctx: Context = None) -> dict:
         return {"success": True, "data": result}
     except Exception as e:
         logger.error(f"❌ delete_meeting error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
+
+# ====================================================
+# 📊 PROJECTS MANAGEMENT TOOLS
+# ====================================================
+
+
+# -----------------------
+# TOOL 17: CREATE PROJECT
+# -----------------------
+@mcp.tool()
+async def create_project_sheet(
+    nombre: str,
+    id_cliente: str,
+    servicio: Optional[str] = None,
+    descripcion: Optional[str] = None,
+    fecha_inicio: Optional[str] = None,
+    fecha_fin: Optional[str] = None,
+    estado: Optional[str] = "En Progreso",
+    nota: Optional[str] = None,
+    ctx: Context = None,
+) -> dict:
+    """
+    Crea un nuevo proyecto en la hoja de Projects.
+
+    Args:
+        nombre: Nombre del proyecto (requerido)
+        id_cliente: ID del cliente asociado (requerido)
+        servicio: Servicio relacionado con el proyecto
+        descripcion: Descripción del proyecto
+        fecha_inicio: Fecha de inicio (formato: YYYY-MM-DD HH:MM:SS)
+        fecha_fin: Fecha estimada de finalización
+        estado: Estado del proyecto (default: "En Progreso")
+        nota: Notas adicionales
+    """
+    ctx = ctx or get_context()
+    logger.info(f"📝 create_project | nombre={nombre}, cliente={id_cliente}")
+
+    try:
+        result = ProjectService.create_project(
+            nombre=nombre,
+            id_cliente=id_cliente,
+            servicio=servicio,
+            descripcion=descripcion,
+            fecha_inicio=fecha_inicio,
+            fecha_fin=fecha_fin,
+            estado=estado,
+            nota=nota,
+        )
+        logger.info(f"📤 create_project response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ create_project error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
+
+# -----------------------
+# TOOL 18: GET PROJECT BY ID
+# -----------------------
+@mcp.tool()
+async def get_project_sheet_by_id(project_id: str, ctx: Context = None) -> dict:
+    """
+    Consulta un proyecto específico por su ID.
+
+    Args:
+        project_id: ID único del proyecto
+    """
+    ctx = ctx or get_context()
+    logger.info(f"🔍 get_project_by_id | project_id={project_id}")
+
+    try:
+        result = ProjectService.get_project_by_id(project_id)
+        logger.info(f"📤 get_project_by_id response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ get_project_by_id error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
+
+# -----------------------
+# TOOL 19: GET PROJECTS BY CLIENT
+# -----------------------
+@mcp.tool()
+async def get_projects_sheet_by_client(id_cliente: str, ctx: Context = None) -> dict:
+    """
+    Consulta todos los proyectos asociados a un cliente específico.
+
+    Args:
+        id_cliente: ID del cliente
+    """
+    ctx = ctx or get_context()
+    logger.info(f"🔍 get_projects_by_client | id_cliente={id_cliente}")
+
+    try:
+        result = ProjectService.get_projects_by_client(id_cliente)
+        logger.info(f"📤 get_projects_by_client response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ get_projects_by_client error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
+
+# -----------------------
+# TOOL 20: GET PROJECTS BY DATE
+# -----------------------
+@mcp.tool()
+async def get_projects_sheet_by_date(fecha_inicio: str, ctx: Context = None) -> dict:
+    """
+    Consulta todos los proyectos que inician en una fecha específica.
+
+    Args:
+        fecha_inicio: Fecha en formato YYYY-MM-DD
+    """
+    ctx = ctx or get_context()
+    logger.info(f"📅 get_projects_by_date | fecha={fecha_inicio}")
+
+    try:
+        result = ProjectService.get_projects_by_date(fecha_inicio)
+        logger.info(f"📤 get_projects_by_date response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ get_projects_by_date error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
+
+# -----------------------
+# TOOL 21: UPDATE PROJECT
+# -----------------------
+@mcp.tool()
+async def update_project_sheet(
+    project_id: str,
+    fields: dict,
+    ctx: Context = None,
+) -> dict:
+    """
+    Actualiza campos de un proyecto existente.
+
+    Args:
+        project_id: ID del proyecto a actualizar
+        fields: Diccionario con los campos a actualizar
+            Campos disponibles: "Nombre", "Descripcion", "Servicio", "Estado",
+            "Nota", "Fecha_Inicio", "Fecha_Fin", "Id_Cliente"
+            Ejemplo: {"Estado": "Completado", "Nota": "Proyecto finalizado"}
+    """
+    ctx = ctx or get_context()
+    logger.info(f"🔄 update_project | project_id={project_id}, fields={fields}")
+
+    if not fields:
+        return {
+            "success": False,
+            "error": "No se proporcionaron campos para actualizar",
+        }
+
+    try:
+        result = ProjectService.update_project(project_id=project_id, fields=fields)
+        logger.info(f"📤 update_project response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ update_project error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
+
+# -----------------------
+# TOOL 22: UPDATE PROJECT NOTE BY CLIENT
+# -----------------------
+@mcp.tool()
+async def update_project_note_by_client(
+    id_cliente: str,
+    nota: str,
+    ctx: Context = None,
+) -> dict:
+    """
+    Actualiza la nota de todos los proyectos asociados a un cliente.
+
+    Args:
+        id_cliente: ID del cliente cuyos proyectos se actualizarán
+        nota: Nueva nota a agregar a todos los proyectos del cliente
+    """
+    ctx = ctx or get_context()
+    logger.info(f"✏️ update_project_note_by_client | id_cliente={id_cliente}")
+
+    try:
+        result = ProjectService.update_project_note_by_client(
+            id_cliente=id_cliente, nota=nota
+        )
+        logger.info(f"📤 update_project_note_by_client response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ update_project_note_by_client error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
+
+# -----------------------
+# TOOL 23: DELETE PROJECT
+# -----------------------
+@mcp.tool()
+async def delete_project_sheet(project_id: str, ctx: Context = None) -> dict:
+    """
+    Elimina un proyecto de la hoja de Projects.
+
+    Args:
+        project_id: ID del proyecto a eliminar
+    """
+    ctx = ctx or get_context()
+    logger.info(f"🗑️ delete_project | project_id={project_id}")
+
+    try:
+        result = ProjectService.delete_project(project_id)
+        logger.info(f"📤 delete_project response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ delete_project error: {str(e)}", exc_info=True)
         return {"success": False, "error": str(e)}
 
 

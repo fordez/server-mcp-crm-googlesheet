@@ -2975,3 +2975,28 @@ AttributeError: type object 'CRMService' has no attribute 'update_client'. Did y
 2025-10-29 18:41:00,892 - INFO - Created new transport with session ID: b911c8c3d01f4489b848696110b11c62
 2025-10-29 18:41:01,827 - INFO - Processing request of type ListToolsRequest
 2025-10-29 20:42:22,834 - INFO - StreamableHTTP session manager shutting down
+2025-10-30 07:01:06,588 - INFO - StreamableHTTP session manager started
+2025-10-30 07:02:45,914 - INFO - StreamableHTTP session manager shutting down
+2025-10-30 07:22:33,593 - INFO - StreamableHTTP session manager started
+2025-10-30 07:26:01,003 - INFO - Created new transport with session ID: 9b3a59d8515f46f3990e9609f1835d45
+2025-10-30 07:26:02,031 - INFO - Processing request of type ListToolsRequest
+2025-10-30 07:26:12,269 - INFO - Processing request of type CallToolRequest
+2025-10-30 07:26:12,269 - INFO - 🔍 get_meetings_by_client | id_cliente=q6YWeY
+2025-10-30 07:26:15,440 - INFO - 📤 get_meetings_by_client response: {'success': True, 'count': 1, 'meetings': [{'Id ': 'aa706sbfn1o885af15vgc4b6ps', 'Asunto': 'Reunión Desarrollo Web con Fernando', 'Detalles': 'Reunión para trabajar en el desarrollo web y potenciar la visibilidad del negocio de Fernando.', 'Fecha Inicio': '2025-10-29 17:00:00', 'Meet_Link': 'https://meet.google.com/ebc-kqgi-jpx', 'Calendar_Link': '', 'Estado': 'Programada', 'Fecha Creada': '2025-10-29 16:51:59', 'Id Cliente': 'q6YWeY'}]}
+2025-10-30 08:07:47,730 - INFO - StreamableHTTP session manager shutting down
+2025-10-30 08:11:59,403 - INFO - StreamableHTTP session manager started
+2025-10-30 08:12:03,120 - INFO - StreamableHTTP session manager shutting down
+2025-10-30 08:15:29,415 - INFO - StreamableHTTP session manager started
+2025-10-30 08:15:41,972 - INFO - StreamableHTTP session manager shutting down
+2025-10-30 08:22:49,144 - INFO - StreamableHTTP session manager started
+2025-10-30 08:23:21,475 - INFO - Created new transport with session ID: 795e37d725164f3fadabc0072da035e6
+2025-10-30 08:23:22,315 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:23:31,514 - INFO - Processing request of type CallToolRequest
+2025-10-30 08:23:31,515 - INFO - 🔍 get_projects_by_client | id_cliente=q6YWeY
+2025-10-30 08:23:33,558 - INFO - 📤 get_projects_by_client response: {'success': True, 'count': 0, 'projects': []}
+2025-10-30 08:24:50,975 - INFO - Created new transport with session ID: 76dc23ac7a4442178c1166acf5e45417
+2025-10-30 08:24:51,912 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:24:58,655 - INFO - Processing request of type CallToolRequest
+2025-10-30 08:24:58,656 - INFO - 🔍 get_meetings_by_client | id_cliente=q6YWeY
+2025-10-30 08:25:01,218 - INFO - 📤 get_meetings_by_client response: {'success': True, 'count': 1, 'meetings': [{'Id ': 'aa706sbfn1o885af15vgc4b6ps', 'Asunto': 'Reunión Desarrollo Web con Fernando', 'Detalles': 'Reunión para trabajar en el desarrollo web y potenciar la visibilidad del negocio de Fernando.', 'Fecha Inicio': '2025-10-29 17:00:00', 'Meet_Link': 'https://meet.google.com/ebc-kqgi-jpx', 'Calendar_Link': '', 'Estado': 'Programada', 'Fecha Creada': '2025-10-29 16:51:59', 'Id Cliente': 'q6YWeY'}]}
+2025-10-30 08:25:31,663 - INFO - StreamableHTTP session manager shutting down

@@ -3,6 +3,7 @@ credentials.json
 meet-credentials.json
 token.json
 .env
+secrets/
 
 # --- Archivos temporales / locales ---
 __pycache__/
