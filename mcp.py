@@ -2,6 +2,7 @@ from fastmcp import FastMCP, Context
 from fastmcp.server.dependencies import get_context
 from services.google_sheet.crm_service import CRMService
 from services.google_sheet.catalog_service import CatalogService
+from services.google_sheet.meeting_service import MeetingService  # 👈 NUEVO
 from services.google_calendar_meet.calendar_service import CalendarService
 import os
 import logging
@@ -32,7 +33,7 @@ logger = logging.getLogger(__name__)
 # ====================================================
 # 🚀 Inicializar MCP
 # ====================================================
-mcp = FastMCP(name="CRM + Catalog Server")
+mcp = FastMCP(name="CRM + Catalog + Meetings Server")
 
 
 # ====================================================
@@ -261,6 +262,186 @@ async def calendar_get_event_details(event_id: str, ctx: Context = None) -> dict
     logger.info(f"📄 calendar_get_event_details | event_id={event_id}")
     result = CalendarService.get_event_details(event_id)
     return {"success": True, "data": result}
+
+
+# ====================================================
+# 📅 MEETINGS MANAGEMENT TOOLS
+# ====================================================
+
+
+# -----------------------
+# TOOL 11: CREATE MEETING
+# -----------------------
+@mcp.tool()
+async def create_meeting_sheet(
+    asunto: str,
+    fecha_inicio: str,
+    id_cliente: str,
+    detalles: Optional[str] = None,
+    meet_link: Optional[str] = None,
+    calendar_id: Optional[str] = None,
+    estado: Optional[str] = "Programada",
+    ctx: Context = None,
+) -> dict:
+    """
+    Crea una nueva reunión en la hoja de Meetings.
+
+    Args:
+        asunto: Título o asunto de la reunión
+        fecha_inicio: Fecha y hora de inicio (formato ISO: YYYY-MM-DD HH:MM:SS)
+        id_cliente: ID del cliente asociado
+        detalles: Descripción o detalles adicionales (opcional)
+        meet_link: Link de Google Meet (opcional)
+        calendar_id: ID del evento en Google Calendar (opcional)
+        estado: Estado de la reunión (default: "Programada")
+    """
+    ctx = ctx or get_context()
+    logger.info(f"📝 create_meeting | asunto={asunto}, cliente={id_cliente}")
+
+    try:
+        result = MeetingService.create_meeting(
+            asunto=asunto,
+            fecha_inicio=fecha_inicio,
+            id_cliente=id_cliente,
+            detalles=detalles,
+            meet_link=meet_link,
+            calendar_id=calendar_id,
+            estado=estado,
+        )
+        logger.info(f"📤 create_meeting response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ create_meeting error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
+
+# -----------------------
+# TOOL 12: GET MEETING BY ID
+# -----------------------
+@mcp.tool()
+async def get_meeting_sheet_by_id(meeting_id: str, ctx: Context = None) -> dict:
+    """
+    Consulta una reunión específica por su ID.
+
+    Args:
+        meeting_id: ID único de la reunión
+    """
+    ctx = ctx or get_context()
+    logger.info(f"🔍 get_meeting_by_id | meeting_id={meeting_id}")
+
+    try:
+        result = MeetingService.get_meeting_by_id(meeting_id)
+        logger.info(f"📤 get_meeting_by_id response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ get_meeting_by_id error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
+
+# -----------------------
+# TOOL 13: GET MEETINGS BY CLIENT
+# -----------------------
+@mcp.tool()
+async def get_meetings_sheet_by_client(id_cliente: str, ctx: Context = None) -> dict:
+    """
+    Consulta todas las reuniones asociadas a un cliente específico.
+
+    Args:
+        id_cliente: ID del cliente
+    """
+    ctx = ctx or get_context()
+    logger.info(f"🔍 get_meetings_by_client | id_cliente={id_cliente}")
+
+    try:
+        result = MeetingService.get_meetings_by_client(id_cliente)
+        logger.info(f"📤 get_meetings_by_client response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ get_meetings_by_client error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
+
+# -----------------------
+# TOOL 14: GET MEETINGS BY DATE
+# -----------------------
+@mcp.tool()
+async def get_meetings_sheet_by_date(fecha_inicio: str, ctx: Context = None) -> dict:
+    """
+    Consulta todas las reuniones programadas para una fecha específica.
+
+    Args:
+        fecha_inicio: Fecha en formato YYYY-MM-DD
+    """
+    ctx = ctx or get_context()
+    logger.info(f"📅 get_meetings_by_date | fecha={fecha_inicio}")
+
+    try:
+        result = MeetingService.get_meetings_by_date(fecha_inicio)
+        logger.info(f"📤 get_meetings_by_date response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ get_meetings_by_date error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
+
+# -----------------------
+# TOOL 15: UPDATE MEETING
+# -----------------------
+@mcp.tool()
+async def update_meeting_sheet(
+    meeting_id: str,
+    fields: dict,
+    ctx: Context = None,
+) -> dict:
+    """
+    Actualiza campos de una reunión existente.
+
+    Args:
+        meeting_id: ID de la reunión a actualizar
+        fields: Diccionario con los campos a actualizar
+               Campos disponibles: "Asunto", "Detalles", "Fecha Inicio",
+               "Meet", "Calendar", "Estado", "Id Cliente"
+               Ejemplo: {"Estado": "Completada", "Meet": "https://meet.google.com/xyz"}
+    """
+    ctx = ctx or get_context()
+    logger.info(f"🔄 update_meeting | meeting_id={meeting_id}, fields={fields}")
+
+    if not fields:
+        return {
+            "success": False,
+            "error": "No se proporcionaron campos para actualizar",
+        }
+
+    try:
+        result = MeetingService.update_meeting(meeting_id=meeting_id, fields=fields)
+        logger.info(f"📤 update_meeting response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ update_meeting error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
+
+# -----------------------
+# TOOL 16: DELETE MEETING
+# -----------------------
+@mcp.tool()
+async def delete_meeting_sheet(meeting_id: str, ctx: Context = None) -> dict:
+    """
+    Elimina una reunión de la hoja de Meetings.
+
+    Args:
+        meeting_id: ID de la reunión a eliminar
+    """
+    ctx = ctx or get_context()
+    logger.info(f"🗑️ delete_meeting | meeting_id={meeting_id}")
+
+    try:
+        result = MeetingService.delete_meeting(meeting_id)
+        logger.info(f"📤 delete_meeting response: {result}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.error(f"❌ delete_meeting error: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
 
 
 # ====================================================

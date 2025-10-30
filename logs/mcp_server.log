@@ -2814,3 +2814,164 @@ AttributeError: type object 'CRMService' has no attribute 'update_client'. Did y
 2025-10-29 09:39:36,146 - INFO - StreamableHTTP session manager shutting down
 2025-10-29 09:39:39,025 - INFO - StreamableHTTP session manager started
 2025-10-29 09:53:07,580 - INFO - StreamableHTTP session manager shutting down
+2025-10-29 10:20:47,879 - INFO - StreamableHTTP session manager started
+2025-10-29 10:21:05,693 - INFO - Created new transport with session ID: caff501cbe0349488c9d0fd1333b3b2e
+2025-10-29 10:21:06,624 - INFO - Processing request of type ListToolsRequest
+2025-10-29 10:21:26,555 - INFO - Created new transport with session ID: 2722c156c2af447bb3e125c34ef1c461
+2025-10-29 10:21:27,509 - INFO - Processing request of type ListToolsRequest
+2025-10-29 10:21:29,727 - INFO - Processing request of type CallToolRequest
+2025-10-29 10:21:29,727 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-29 10:21:36,894 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-29 10:21:39,458 - INFO - Processing request of type CallToolRequest
+2025-10-29 10:21:39,458 - INFO - ✨ create_client | nombre=Fernando, canal=whatsapp
+2025-10-29 10:21:45,284 - INFO - 📤 create_client response: {'success': True, 'client_id': 'PHkGLp', 'nombre': 'Fernando', 'canal': 'whatsapp'}
+2025-10-29 10:22:44,299 - INFO - Created new transport with session ID: 931a6ad804be4358a92f3e96cf6a7f8e
+2025-10-29 10:22:45,136 - INFO - Processing request of type ListToolsRequest
+2025-10-29 10:23:04,242 - INFO - Created new transport with session ID: 0e7c914ae43441ef8cc07e11fae29096
+2025-10-29 10:23:04,972 - INFO - Processing request of type ListToolsRequest
+2025-10-29 10:23:15,830 - INFO - Created new transport with session ID: 33d706467a944cb3b6af7e1376bb32c4
+2025-10-29 10:23:16,574 - INFO - Processing request of type ListToolsRequest
+2025-10-29 10:23:27,386 - INFO - Created new transport with session ID: 01b3db611dae4216b81547063305b066
+2025-10-29 10:23:28,370 - INFO - Processing request of type ListToolsRequest
+2025-10-29 10:23:31,789 - INFO - Processing request of type CallToolRequest
+2025-10-29 10:23:31,790 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-29 10:23:32,707 - INFO - 📤 verify_client response: {'exists': True, 'client_id': 'PHkGLp', 'nombre': 'Fernando', 'telefono': 573146964611, 'correo': '', 'tipo': 'Lead', 'estado': 'Nuevo', 'canal': 'whatsapp', 'nota': '', 'usuario': 'Forderz', 'matched_by': 'telefono'}
+2025-10-29 10:23:32,709 - INFO - Processing request of type CallToolRequest
+2025-10-29 10:23:32,710 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-29 10:23:33,735 - INFO - 📤 verify_client response: {'exists': True, 'client_id': 'PHkGLp', 'nombre': 'Fernando', 'telefono': 573146964611, 'correo': '', 'tipo': 'Lead', 'estado': 'Nuevo', 'canal': 'whatsapp', 'nota': '', 'usuario': 'Forderz', 'matched_by': 'telefono'}
+2025-10-29 10:23:37,634 - INFO - Processing request of type CallToolRequest
+2025-10-29 10:23:37,635 - INFO - 🔄 update_client_status | client_id=PHkGLp, estado=Interesado
+2025-10-29 10:23:40,105 - INFO - 📤 update_client_status response: {'success': True, 'client_id': 'PHkGLp', 'updated_fields': ['Estado']}
+2025-10-29 10:23:40,107 - INFO - Processing request of type CallToolRequest
+2025-10-29 10:23:40,108 - INFO - ✏️ update_client_note | client_id=PHkGLp
+2025-10-29 10:23:42,343 - INFO - 📤 update_client_note response: {'success': True, 'client_id': 'PHkGLp', 'updated_fields': ['Nota']}
+2025-10-29 10:24:05,080 - INFO - Created new transport with session ID: 5f96cd104f68428798b56b4755ee06e9
+2025-10-29 10:24:05,747 - INFO - Processing request of type ListToolsRequest
+2025-10-29 10:24:07,426 - INFO - Processing request of type CallToolRequest
+2025-10-29 10:24:07,426 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-29 10:24:10,393 - INFO - 📤 verify_client response: {'exists': True, 'client_id': 'PHkGLp', 'nombre': 'Fernando', 'telefono': 573146964611, 'correo': '', 'tipo': 'Lead', 'estado': 'Interesado', 'canal': 'whatsapp', 'nota': 'Interés: desarrollo web. Objetivo: visibilidad para la empresa. Tipo de cliente: empresa. No tiene perfil social ni sitio web.', 'usuario': 'Forderz', 'matched_by': 'telefono'}
+2025-10-29 12:17:27,260 - INFO - StreamableHTTP session manager shutting down
+2025-10-29 12:17:30,409 - INFO - StreamableHTTP session manager started
+2025-10-29 12:17:44,818 - INFO - Created new transport with session ID: faa6e3b1ce36474a84321350aa527e4b
+2025-10-29 12:17:45,711 - INFO - Processing request of type ListToolsRequest
+2025-10-29 13:04:26,617 - INFO - StreamableHTTP session manager shutting down
+2025-10-29 13:04:30,262 - INFO - StreamableHTTP session manager started
+2025-10-29 13:24:48,587 - INFO - Created new transport with session ID: 2dab6de78aa94bad9f0cc05842eb2fed
+2025-10-29 13:24:49,655 - INFO - Processing request of type ListToolsRequest
+2025-10-29 13:24:51,873 - INFO - Processing request of type CallToolRequest
+2025-10-29 13:24:51,874 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-29 13:24:54,431 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-29 13:25:16,215 - INFO - Created new transport with session ID: 878abea4f32e43cb8a91c8fbd1ba4350
+2025-10-29 13:25:17,054 - INFO - Processing request of type ListToolsRequest
+2025-10-29 13:25:19,419 - INFO - Processing request of type CallToolRequest
+2025-10-29 13:25:19,419 - INFO - 🕓 calendar_check_availability
+2025-10-29 13:25:19,423 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-10-29 13:54:56,747 - INFO - Created new transport with session ID: 6e357e5abc304d0eb9d3cd1c9bd9bf16
+2025-10-29 13:54:57,699 - INFO - Processing request of type ListToolsRequest
+2025-10-29 13:55:04,427 - INFO - Processing request of type CallToolRequest
+2025-10-29 13:55:04,427 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-29 13:55:05,620 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-29 13:55:51,963 - INFO - Created new transport with session ID: ea76657ee0c94fd78c2d4bba7e8e6a0f
+2025-10-29 13:55:52,884 - INFO - Processing request of type ListToolsRequest
+2025-10-29 13:55:59,321 - INFO - Processing request of type CallToolRequest
+2025-10-29 13:55:59,322 - INFO - ✨ create_client | nombre=Fernando, canal=whatsapp
+2025-10-29 13:56:04,284 - INFO - 📤 create_client response: {'success': True, 'client_id': 'q6YWeY', 'nombre': 'Fernando', 'canal': 'whatsapp'}
+2025-10-29 13:56:47,544 - INFO - Created new transport with session ID: 9402c0f274204416832caf08bf67889e
+2025-10-29 13:56:48,349 - INFO - Processing request of type ListToolsRequest
+2025-10-29 13:57:41,713 - INFO - Created new transport with session ID: 9dd917b93c29489c885e33adf7f564c2
+2025-10-29 13:57:42,555 - INFO - Processing request of type ListToolsRequest
+2025-10-29 13:58:02,649 - INFO - Created new transport with session ID: 83ad4f0b4b3146719b4a70a57d55494c
+2025-10-29 13:58:03,432 - INFO - Processing request of type ListToolsRequest
+2025-10-29 13:58:22,962 - INFO - Created new transport with session ID: 568eb03bc2ce4976b96fae422d613ed8
+2025-10-29 13:58:23,724 - INFO - Processing request of type ListToolsRequest
+2025-10-29 13:58:36,607 - INFO - Processing request of type CallToolRequest
+2025-10-29 13:58:36,607 - INFO - 🔍 get_all_services
+2025-10-29 13:58:38,136 - INFO - 📤 get_all_services response: {'success': True, 'services': [{'Nombre': 'Gestión de Redes Sociales', 'Objetivo': 'Aumenta tu Presencia en Redes Sociales con una Gestión Eficiente'}, {'Nombre': 'Identidad Corporativa y Branding', 'Objetivo': 'Diferencia tu Marca con una Identidad Corporativa Única'}, {'Nombre': 'Redacción de Contenido', 'Objetivo': 'Creación de contenido para posicionamiento web'}, {'Nombre': 'Posicionamiento Web - SEO', 'Objetivo': 'Potencia tu Visibilidad Online con SEO y SEM Google Ads'}, {'Nombre': 'Diseño y Desarrollo Web', 'Objetivo': 'Diseño y desarrollo web a medida\npara potenciar tu marca'}, {'Nombre': 'Mantenimiento Web Técnico', 'Objetivo': 'Sabemos lo que es importante para tu website'}, {'Nombre': 'Desarrollo de Apps', 'Objetivo': ' Potenciar Tu Negocio con una App'}, {'Nombre': 'Motion Graphics', 'Objetivo': 'Haz Crecer tu Estrategia Digital con el Poder de Motion Graphics'}, {'Nombre': 'Registro de Marcas y Patantes', 'Objetivo': 'Nuestro objetivo es proteger tu marca en el ámbito de la propiedad industrial, asegurándote el respaldo legal necesario para diferenciarte y crecer con confianza.'}, {'Nombre': 'Representaciones 3D', 'Objetivo': 'Una nueva dimensión\npara tus productos y proyectos'}, {'Nombre': 'Integracion de Inteligecia Artificial', 'Objetivo': ''}, {'Nombre': 'Agentes AI Whatsapp', 'Objetivo': ''}]}
+2025-10-29 13:58:38,141 - INFO - Processing request of type CallToolRequest
+2025-10-29 13:58:38,142 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-29 13:58:38,948 - INFO - 📤 verify_client response: {'exists': True, 'client_id': 'q6YWeY', 'nombre': 'Fernando', 'telefono': 573146964611, 'correo': '', 'tipo': 'Lead', 'estado': 'Nuevo', 'canal': 'whatsapp', 'nota': '', 'usuario': 'Fordez', 'matched_by': 'telefono'}
+2025-10-29 13:58:47,048 - INFO - Processing request of type CallToolRequest
+2025-10-29 13:58:47,049 - INFO - 🔄 update_client_status | client_id=q6YWeY, estado=Interesado
+2025-10-29 13:58:49,298 - INFO - 📤 update_client_status response: {'success': True, 'client_id': 'q6YWeY', 'updated_fields': ['Estado']}
+2025-10-29 13:58:54,233 - INFO - Processing request of type CallToolRequest
+2025-10-29 13:58:54,234 - INFO - ✏️ update_client_note | client_id=q6YWeY
+2025-10-29 13:58:56,296 - INFO - 📤 update_client_note response: {'success': True, 'client_id': 'q6YWeY', 'updated_fields': ['Nota']}
+2025-10-29 13:59:01,394 - INFO - Processing request of type CallToolRequest
+2025-10-29 13:59:01,395 - INFO - 🕓 calendar_check_availability
+2025-10-29 13:59:46,949 - INFO - Created new transport with session ID: b705b2eafab745d786f3ba1e91986cc8
+2025-10-29 13:59:47,789 - INFO - Processing request of type ListToolsRequest
+2025-10-29 14:00:50,540 - INFO - Created new transport with session ID: ba596b07f6d74bdeb0daf374331bef07
+2025-10-29 14:00:51,372 - INFO - Processing request of type ListToolsRequest
+2025-10-29 14:02:11,466 - INFO - Created new transport with session ID: da621d0b5d604ccda3803ccbeff16f5c
+2025-10-29 14:02:12,164 - INFO - Processing request of type ListToolsRequest
+2025-10-29 14:02:34,160 - INFO - Created new transport with session ID: bdda20e60c344130a32b329b3a5a1e38
+2025-10-29 14:02:35,010 - INFO - Processing request of type ListToolsRequest
+2025-10-29 14:07:53,500 - INFO - Created new transport with session ID: c3b0128ba05c42959beb6dd009afac97
+2025-10-29 14:07:54,440 - INFO - Processing request of type ListToolsRequest
+2025-10-29 14:09:10,946 - INFO - Created new transport with session ID: 0c7d33ace0b1497b956e123386e3ad06
+2025-10-29 14:09:11,822 - INFO - Processing request of type ListToolsRequest
+2025-10-29 14:45:28,014 - INFO - StreamableHTTP session manager shutting down
+2025-10-29 14:45:31,558 - INFO - StreamableHTTP session manager started
+2025-10-29 14:49:10,791 - INFO - StreamableHTTP session manager shutting down
+2025-10-29 14:49:13,616 - INFO - StreamableHTTP session manager started
+2025-10-29 14:49:30,488 - INFO - Created new transport with session ID: 312c89158d1b4cf487cf2b8f66cca89b
+2025-10-29 14:49:31,242 - INFO - Processing request of type ListToolsRequest
+2025-10-29 14:49:53,443 - INFO - Created new transport with session ID: ca302f69539942e88707e10ced081086
+2025-10-29 14:49:54,093 - INFO - Processing request of type ListToolsRequest
+2025-10-29 14:50:02,355 - INFO - Processing request of type CallToolRequest
+2025-10-29 14:50:02,355 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-29 14:50:04,809 - INFO - 📤 verify_client response: {'exists': True, 'client_id': 'q6YWeY', 'nombre': 'Fernando', 'telefono': 573146964611, 'correo': '', 'tipo': 'Lead', 'estado': 'Interesado', 'canal': 'whatsapp', 'nota': 'Interés: Desarrollo web. Objetivo: Visibilidad para su negocio. Tipo de cliente: Empresa. No tiene perfil social ni sitio web.', 'usuario': 'Fordez', 'matched_by': 'telefono'}
+2025-10-29 14:50:24,361 - INFO - Created new transport with session ID: 1d577fdfdccb410daab2ebbd815ff521
+2025-10-29 14:50:25,123 - INFO - Processing request of type ListToolsRequest
+2025-10-29 14:50:32,979 - INFO - Processing request of type CallToolRequest
+2025-10-29 14:50:32,980 - INFO - 🕓 calendar_check_availability
+2025-10-29 14:50:32,990 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-10-29 14:50:34,466 - INFO - Processing request of type CallToolRequest
+2025-10-29 14:50:34,467 - INFO - 🔄 update_client | client_id=q6YWeY, fields={'Correo': 'fordezdeveloper2@gmail.com'}
+2025-10-29 14:50:36,861 - INFO - 📤 update_client response: {'success': True, 'client_id': 'q6YWeY', 'updated_fields': ['Correo']}
+2025-10-29 14:51:11,224 - INFO - Created new transport with session ID: a0f137fb0fb4422681f4c86721a3bbbb
+2025-10-29 14:51:11,903 - INFO - Processing request of type ListToolsRequest
+2025-10-29 14:51:38,096 - INFO - Created new transport with session ID: 025c4c66a55649f0a65dd4bf996b6417
+2025-10-29 14:51:38,862 - INFO - Processing request of type ListToolsRequest
+2025-10-29 14:51:47,512 - INFO - Processing request of type CallToolRequest
+2025-10-29 14:51:47,512 - INFO - 📅 calendar_create_meet | summary=Reunión Desarrollo Web con Fernando
+2025-10-29 14:51:48,468 - INFO - ✅ Evento creado | ID: aa706sbfn1o885af15vgc4b6ps | Link: https://www.google.com/calendar/event?eid=YWE3MDZzYmZuMW84ODVhZjE1dmdjNGI2cHMgZm9yZGV6Y29udGFjdG9AbQ
+2025-10-29 14:51:58,201 - INFO - Processing request of type CallToolRequest
+2025-10-29 14:51:58,201 - INFO - 📝 create_meeting | asunto=Reunión Desarrollo Web con Fernando, cliente=q6YWeY
+2025-10-29 14:52:03,069 - INFO - 📤 create_meeting response: {'success': True, 'calendar_id': 'aa706sbfn1o885af15vgc4b6ps', 'asunto': 'Reunión Desarrollo Web con Fernando', 'fecha_inicio': '2025-10-29 17:00:00', 'id_cliente': 'q6YWeY', 'estado': 'Programada', 'fecha_creada': '2025-10-29 16:51:59'}
+2025-10-29 15:17:16,956 - INFO - Created new transport with session ID: 18f3203283204f9c927fa47664e933ff
+2025-10-29 15:17:17,685 - INFO - Processing request of type ListToolsRequest
+2025-10-29 15:17:25,051 - INFO - Processing request of type CallToolRequest
+2025-10-29 15:17:25,051 - INFO - 🔍 get_meetings_by_client | id_cliente=q6YWeY
+2025-10-29 15:17:26,555 - INFO - 📤 get_meetings_by_client response: {'success': True, 'count': 0, 'meetings': []}
+2025-10-29 15:35:09,121 - INFO - Created new transport with session ID: d74e8522d6f848efb3d4d0e520011140
+2025-10-29 15:35:10,215 - INFO - Processing request of type ListToolsRequest
+2025-10-29 16:00:06,723 - INFO - Created new transport with session ID: 3fec76f492354e19b857cbbdaeadccfa
+2025-10-29 16:00:07,565 - INFO - Processing request of type ListToolsRequest
+2025-10-29 16:00:15,761 - INFO - Processing request of type CallToolRequest
+2025-10-29 16:00:15,762 - INFO - 🔍 get_meetings_by_client | id_cliente=q6YWeY
+2025-10-29 16:00:30,020 - INFO - 📤 get_meetings_by_client response: {'success': True, 'count': 0, 'meetings': []}
+2025-10-29 16:01:27,740 - INFO - Created new transport with session ID: 06b7327776bf4e37999c688f56eef8b1
+2025-10-29 16:01:28,593 - INFO - Processing request of type ListToolsRequest
+2025-10-29 16:13:18,550 - INFO - Created new transport with session ID: a379ff9fde2442f982fc401cadee4bbf
+2025-10-29 16:13:19,395 - INFO - Processing request of type ListToolsRequest
+2025-10-29 16:13:27,356 - INFO - Processing request of type CallToolRequest
+2025-10-29 16:13:27,356 - INFO - 🔍 get_service_by_name | service_name=Diseño y Desarrollo Web
+2025-10-29 16:13:34,394 - INFO - 📤 get_service_by_name response: {'success': True, 'service': {'Nombre': 'Diseño y Desarrollo Web', 'Objetivo': 'Diseño y desarrollo web a medida\npara potenciar tu marca'}}
+2025-10-29 16:16:11,902 - INFO - Created new transport with session ID: 9def027d18494941aad9e4d82526b7ce
+2025-10-29 16:16:12,933 - INFO - Processing request of type ListToolsRequest
+2025-10-29 16:16:22,040 - INFO - Processing request of type CallToolRequest
+2025-10-29 16:16:22,041 - INFO - 🕓 calendar_check_availability
+2025-10-29 18:04:07,697 - INFO - Created new transport with session ID: 98f1452a2d83430cbcf398e5665a1f57
+2025-10-29 18:04:08,640 - INFO - Processing request of type ListToolsRequest
+2025-10-29 18:12:47,416 - INFO - Created new transport with session ID: 8bbf679136da4518a6eade698a97427f
+2025-10-29 18:12:48,383 - INFO - Processing request of type ListToolsRequest
+2025-10-29 18:24:24,822 - INFO - Created new transport with session ID: 7eafd0f41f98480295713e8b3ba31c6b
+2025-10-29 18:24:25,739 - INFO - Processing request of type ListToolsRequest
+2025-10-29 18:33:11,151 - INFO - Created new transport with session ID: bc593c6410e845f8b1c3491275cce17d
+2025-10-29 18:33:11,937 - INFO - Processing request of type ListToolsRequest
+2025-10-29 18:33:17,521 - INFO - Processing request of type CallToolRequest
+2025-10-29 18:33:17,531 - INFO - 🕓 calendar_check_availability
+2025-10-29 18:41:00,892 - INFO - Created new transport with session ID: b911c8c3d01f4489b848696110b11c62
+2025-10-29 18:41:01,827 - INFO - Processing request of type ListToolsRequest
+2025-10-29 20:42:22,834 - INFO - StreamableHTTP session manager shutting down
