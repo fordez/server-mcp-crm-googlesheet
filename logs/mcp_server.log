@@ -3000,3 +3000,213 @@ AttributeError: type object 'CRMService' has no attribute 'update_client'. Did y
 2025-10-30 08:24:58,656 - INFO - 🔍 get_meetings_by_client | id_cliente=q6YWeY
 2025-10-30 08:25:01,218 - INFO - 📤 get_meetings_by_client response: {'success': True, 'count': 1, 'meetings': [{'Id ': 'aa706sbfn1o885af15vgc4b6ps', 'Asunto': 'Reunión Desarrollo Web con Fernando', 'Detalles': 'Reunión para trabajar en el desarrollo web y potenciar la visibilidad del negocio de Fernando.', 'Fecha Inicio': '2025-10-29 17:00:00', 'Meet_Link': 'https://meet.google.com/ebc-kqgi-jpx', 'Calendar_Link': '', 'Estado': 'Programada', 'Fecha Creada': '2025-10-29 16:51:59', 'Id Cliente': 'q6YWeY'}]}
 2025-10-30 08:25:31,663 - INFO - StreamableHTTP session manager shutting down
+2025-10-30 08:30:48,454 - INFO - StreamableHTTP session manager started
+2025-10-30 08:31:03,594 - INFO - Created new transport with session ID: b09461a4909e45aebf986816c87d8a7a
+2025-10-30 08:31:04,359 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:32:40,110 - INFO - Created new transport with session ID: 472524d6080a42be873558fa54a3c073
+2025-10-30 08:32:40,830 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:34:47,149 - INFO - Created new transport with session ID: e9264041c74542549a4e77a6eeb2f39f
+2025-10-30 08:34:47,967 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:37:00,594 - INFO - Created new transport with session ID: 6a6f146ff9e1486d87e3d99ba1caeb28
+2025-10-30 08:37:01,342 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:37:07,441 - INFO - Processing request of type CallToolRequest
+2025-10-30 08:37:07,442 - INFO - 🔍 verify_client | tel=573164187556, correo=None, usuario=None
+2025-10-30 08:37:14,932 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 08:37:34,291 - INFO - Created new transport with session ID: d10edb287c5a4e6f819b06cf8f5d04b1
+2025-10-30 08:37:35,105 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:37:40,591 - INFO - Processing request of type CallToolRequest
+2025-10-30 08:37:40,591 - INFO - 🔍 verify_client | tel=573164187556, correo=None, usuario=None
+2025-10-30 08:37:42,218 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 08:38:33,164 - INFO - Created new transport with session ID: 80ec233bf8e748769afb4f7bec2a838a
+2025-10-30 08:38:33,942 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:38:38,046 - INFO - Processing request of type CallToolRequest
+2025-10-30 08:38:38,047 - INFO - 🔍 verify_client | tel=573164187556, correo=None, usuario=None
+2025-10-30 08:38:42,070 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 08:43:39,808 - INFO - Created new transport with session ID: f02a43cad2314030b9026050847fc22e
+2025-10-30 08:43:40,669 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:47:38,483 - INFO - Created new transport with session ID: 8e8b7a6ec7664aa79c6e862f2f035d0a
+2025-10-30 08:47:39,365 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:52:20,353 - INFO - Created new transport with session ID: 7364e5aebebe4024a9a68f22c0dbf73a
+2025-10-30 08:52:21,279 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:55:38,852 - INFO - Created new transport with session ID: acc8807c32134dcfa7e8a8bf74507030
+2025-10-30 08:55:39,541 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:55:46,184 - INFO - Processing request of type CallToolRequest
+2025-10-30 08:55:46,184 - INFO - 🔍 verify_client | tel=573164187556, correo=None, usuario=None
+2025-10-30 08:55:47,621 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 08:57:41,946 - INFO - Created new transport with session ID: de9f7ed0cb49485b8882b68f6f93a7ca
+2025-10-30 08:57:42,595 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:58:11,685 - INFO - Created new transport with session ID: c0f1d66007f440d7a9ffcdab19b824c3
+2025-10-30 08:58:12,339 - INFO - Processing request of type ListToolsRequest
+2025-10-30 08:58:44,871 - INFO - Created new transport with session ID: 09e083e3737241be868054eca1821861
+2025-10-30 08:58:45,542 - INFO - Processing request of type ListToolsRequest
+2025-10-30 09:00:33,414 - INFO - Created new transport with session ID: 02ca9e2717fe47809c108ad0cfb46343
+2025-10-30 09:00:34,092 - INFO - Processing request of type ListToolsRequest
+2025-10-30 09:00:41,199 - INFO - Processing request of type CallToolRequest
+2025-10-30 09:00:41,199 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-30 09:00:42,322 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 09:00:47,382 - INFO - Processing request of type CallToolRequest
+2025-10-30 09:00:47,383 - INFO - ✨ create_client | nombre=Fernando, canal=whatsapp, thread_id=None
+2025-10-30 09:00:51,708 - INFO - 📤 create_client response: {'success': True, 'client_id': '93WKhT', 'nombre': 'Fernando', 'canal': 'whatsapp', 'thread_id': None}
+2025-10-30 09:04:11,803 - INFO - Created new transport with session ID: 1b3bbbf50e3742d490b6e786e3fc8550
+2025-10-30 09:04:12,845 - INFO - Processing request of type ListToolsRequest
+2025-10-30 09:16:13,540 - INFO - Created new transport with session ID: 09d1c44c4b444c8086457cbd5e71a46f
+2025-10-30 09:16:14,338 - INFO - Processing request of type ListToolsRequest
+2025-10-30 09:16:25,088 - INFO - Created new transport with session ID: d9cbde4a142f4f43a95f07ad4300ac76
+2025-10-30 09:16:25,788 - INFO - Processing request of type ListToolsRequest
+2025-10-30 09:18:03,955 - INFO - Created new transport with session ID: e4ac3f270e894b3e9c467a23db49dcaa
+2025-10-30 09:18:04,611 - INFO - Processing request of type ListToolsRequest
+2025-10-30 09:18:22,359 - INFO - Created new transport with session ID: 97fe5daa339445c68b0783bcca3efe8a
+2025-10-30 09:18:23,017 - INFO - Processing request of type ListToolsRequest
+2025-10-30 09:18:29,529 - INFO - Processing request of type CallToolRequest
+2025-10-30 09:18:29,530 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-30 09:18:31,240 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 09:52:27,618 - INFO - StreamableHTTP session manager shutting down
+2025-10-30 09:54:07,550 - INFO - StreamableHTTP session manager started
+2025-10-30 09:55:42,323 - INFO - Created new transport with session ID: 439e55eefa3a426ca67265aa744da8a2
+2025-10-30 09:55:43,074 - INFO - Processing request of type ListToolsRequest
+2025-10-30 09:55:47,467 - INFO - Processing request of type CallToolRequest
+2025-10-30 09:55:47,467 - INFO - 🔍 verify_client | tel=573164187556, correo=None, usuario=None
+2025-10-30 09:55:50,535 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 09:55:55,082 - INFO - Processing request of type CallToolRequest
+2025-10-30 09:55:55,082 - INFO - ✨ create_or_update_client | nombre=Lucy, canal=web, telefono=573164187556, correo=None, thread_id=None
+2025-10-30 09:56:03,646 - INFO - 📤 create_or_update_client response: {'success': True, 'created': True, 'client_id': 'QHH7h4', 'nombre': 'Lucy', 'canal': 'web', 'thread_id': None}
+2025-10-30 10:02:52,715 - INFO - Created new transport with session ID: cf2519d30e7c47958ad7acd7edbd9f43
+2025-10-30 10:02:53,860 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:02:59,081 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:02:59,184 - INFO - 🔍 verify_client | tel=573164187556, correo=None, usuario=None
+2025-10-30 10:03:00,454 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 10:03:05,079 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:03:05,080 - INFO - ✨ create_or_update_client | nombre=Lucy, canal=web, telefono=573164187556, correo=None, thread_id=None
+2025-10-30 10:03:09,444 - INFO - 📤 create_or_update_client response: {'success': True, 'created': True, 'client_id': 'aBJTRq', 'nombre': 'Lucy', 'canal': 'web', 'thread_id': None}
+2025-10-30 10:06:42,496 - INFO - Created new transport with session ID: e14874a1146e40b6821a25c2b14d5d8c
+2025-10-30 10:06:43,436 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:06:49,381 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:06:49,381 - INFO - 🔍 verify_client | tel=573164187556, correo=None, usuario=None
+2025-10-30 10:06:50,419 - INFO - 📤 verify_client response: {'exists': True, 'client_id': 'aBJTRq', 'nombre': 'Lucy', 'telefono': 573164187556, 'correo': '', 'tipo': 'Lead', 'estado': 'Nuevo', 'canal': 'web', 'nota': '', 'usuario': 'Lucy', 'fecha_creacion': None, 'fecha_conversion': '', 'thread_id': '', 'matched_by': 'telefono'}
+2025-10-30 10:10:19,511 - INFO - Created new transport with session ID: 4b49edf9160d4366b90215e2e716b2a7
+2025-10-30 10:10:20,430 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:10:26,160 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:10:26,162 - INFO - 🔍 verify_client | tel=573164187556, correo=None, usuario=None
+2025-10-30 10:10:27,896 - INFO - 📤 verify_client response: {'exists': True, 'client_id': 'aBJTRq', 'nombre': 'Lucy', 'telefono': 573164187556, 'correo': '', 'tipo': 'Lead', 'estado': 'Nuevo', 'canal': 'web', 'nota': '', 'usuario': 'Lucy', 'fecha_creacion': None, 'fecha_conversion': '', 'thread_id': '', 'matched_by': 'telefono'}
+2025-10-30 10:11:37,328 - INFO - Created new transport with session ID: 63ac3cddd4f0441faac04a2f012cffcd
+2025-10-30 10:11:38,196 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:11:43,805 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:11:43,806 - INFO - 🔍 verify_client | tel=573164187556, correo=None, usuario=None
+2025-10-30 10:11:45,312 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 10:11:51,143 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:11:51,144 - INFO - ✨ create_or_update_client | nombre=Lucy, canal=web, telefono=573164187556, correo=None, thread_id=None
+2025-10-30 10:11:56,383 - INFO - 📤 create_or_update_client response: {'success': True, 'created': True, 'client_id': 'vjUsZr', 'nombre': 'Lucy', 'canal': 'web', 'thread_id': None}
+2025-10-30 10:19:58,797 - INFO - Created new transport with session ID: 3f360ceb613947e9ae70331b1b18b823
+2025-10-30 10:19:59,728 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:20:09,249 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:20:09,250 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-30 10:20:11,797 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 10:20:42,998 - INFO - Created new transport with session ID: 9c52a9aa3e734f21978c1628c6c6c02b
+2025-10-30 10:20:44,055 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:20:55,985 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:20:55,985 - INFO - ✨ create_or_update_client | nombre=Fernando, canal=whatsapp, telefono=573146964611, correo=None, thread_id=None
+2025-10-30 10:20:58,099 - INFO - 📤 create_or_update_client response: {'success': True, 'updated': True, 'client_id': '', 'nombre': 'Fernando', 'canal': 'whatsapp', 'thread_id': None, 'campos_actualizados': ['Nombre', 'Telefono', 'Canal']}
+2025-10-30 10:20:58,103 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:20:58,104 - INFO - 🔄 update_client | client_id=573146964611, fields={'Nombre': 'Fernando'}
+2025-10-30 10:20:59,286 - INFO - 📤 update_client response: {'success': False, 'error': "No se encontró cliente con ID o teléfono '573146964611'"}
+2025-10-30 10:34:17,854 - INFO - StreamableHTTP session manager shutting down
+2025-10-30 10:34:21,227 - INFO - StreamableHTTP session manager started
+2025-10-30 10:34:40,785 - INFO - Created new transport with session ID: 5fc27c10b2da43f381462ce5c8558142
+2025-10-30 10:34:41,706 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:34:50,839 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:34:50,840 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-30 10:34:52,772 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 10:35:36,595 - INFO - Created new transport with session ID: dbb2e674f7a1429e88c1e74e72fa6986
+2025-10-30 10:35:37,527 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:35:44,611 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:35:44,707 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:35:44,708 - INFO - 🔄 update_client | client_id=573146964611, fields={'Nombre': 'Fernando'}
+2025-10-30 10:35:45,637 - INFO - 📤 update_client response: {'success': False, 'error': "No se encontró cliente con ID o teléfono '573146964611'"}
+2025-10-30 10:41:00,400 - INFO - StreamableHTTP session manager shutting down
+2025-10-30 10:41:03,706 - INFO - StreamableHTTP session manager started
+2025-10-30 10:41:27,427 - INFO - Created new transport with session ID: 843d715eb0b74c9ab56b766ed837672c
+2025-10-30 10:41:28,348 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:41:49,864 - INFO - Created new transport with session ID: 4366ef7ff14545afaac57b77e3413bc7
+2025-10-30 10:41:50,588 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:41:58,804 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:41:58,805 - INFO - ✨ create_client | nombre=Fernando, canal=whatsapp, telefono=573146964611, correo=None
+2025-10-30 10:41:58,903 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:41:58,904 - INFO - 🔄 update_client | client_id=573146964611, fields={'Nombre': 'Fernando'}
+2025-10-30 10:42:00,599 - INFO - 📤 update_client response: {'success': False, 'error': "No se encontró cliente con ID o teléfono '573146964611'"}
+2025-10-30 10:42:33,047 - INFO - StreamableHTTP session manager shutting down
+2025-10-30 10:42:36,440 - INFO - StreamableHTTP session manager started
+2025-10-30 10:43:03,081 - INFO - Created new transport with session ID: 21bccf7f3ed244a6a284e7d72af36918
+2025-10-30 10:43:03,990 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:43:11,089 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:43:11,089 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-30 10:43:12,692 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 10:43:28,870 - INFO - Created new transport with session ID: 37a5f2d392e341df9b6c02f115893611
+2025-10-30 10:43:29,852 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:43:36,240 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:43:36,241 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-30 10:43:38,004 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 10:47:00,662 - INFO - Created new transport with session ID: 4e4c1767c3ac4c67a57cc8946e9874a0
+2025-10-30 10:47:01,581 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:47:08,734 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:47:08,734 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-30 10:47:09,654 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 10:47:31,681 - INFO - Created new transport with session ID: 8d5da4773c074857ab5343c3c1e8f973
+2025-10-30 10:47:32,811 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:47:37,590 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:47:37,591 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-30 10:47:38,221 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 10:54:00,154 - INFO - Created new transport with session ID: 935628a54c4a48eeaa62b43d2b417b96
+2025-10-30 10:54:01,024 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:54:07,343 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:54:07,343 - INFO - 🔍 verify_client | tel=573164187556, correo=None, usuario=None
+2025-10-30 10:54:09,487 - INFO - 📤 verify_client response: {'exists': True, 'client_id': 'vjUsZr', 'nombre': 'Lucy', 'telefono': 573164187556, 'correo': '', 'tipo': 'Lead', 'estado': 'Nuevo', 'canal': 'web', 'nota': '', 'usuario': 'Lucy', 'fecha_creacion': None, 'fecha_conversion': '', 'matched_by': 'telefono'}
+2025-10-30 10:57:48,612 - INFO - Created new transport with session ID: eef4f90b85dc4612b9955b0f0cb4b6c4
+2025-10-30 10:57:49,866 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:57:55,433 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:57:55,434 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-30 10:57:57,010 - INFO - 📤 verify_client response: {'exists': False, 'client_id': None}
+2025-10-30 10:58:02,569 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:58:02,571 - INFO - ✨ create_client | nombre=, canal=whatsapp, telefono=573146964611, correo=None
+2025-10-30 10:58:02,571 - INFO - 📤 create_client response: {'success': False, 'error': "Los campos 'nombre' y 'canal' son requeridos"}
+2025-10-30 10:58:17,387 - INFO - Created new transport with session ID: 65565e6f52564415a92bb44ba25138c0
+2025-10-30 10:58:18,244 - INFO - Processing request of type ListToolsRequest
+2025-10-30 10:58:45,850 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:58:45,851 - INFO - ✨ create_client | nombre=Fernando, canal=whatsapp, telefono=573146964611, correo=None
+2025-10-30 10:58:51,233 - INFO - 📤 create_client response: {'success': True, 'created': True, 'client_id': 'nWZXFB', 'nombre': 'Fernando', 'canal': 'whatsapp'}
+2025-10-30 10:58:51,236 - INFO - Processing request of type CallToolRequest
+2025-10-30 10:58:51,236 - INFO - 🔄 update_client | client_id=573146964611, fields={'Nombre': 'Fernando'}
+2025-10-30 10:58:54,044 - INFO - 📤 update_client response: {'success': True, 'client_id': 'zia7b3co', 'updated_fields': ['Nombre']}
+2025-10-30 11:01:31,125 - INFO - Created new transport with session ID: 19322dcd00634b79a8f30e9a955bc7e6
+2025-10-30 11:01:32,457 - INFO - Processing request of type ListToolsRequest
+2025-10-30 11:01:49,349 - INFO - Created new transport with session ID: 318e1ff48a7c4af1a5d27d25e379b927
+2025-10-30 11:01:50,212 - INFO - Processing request of type ListToolsRequest
+2025-10-30 11:01:58,879 - INFO - Processing request of type CallToolRequest
+2025-10-30 11:01:58,880 - INFO - 🔍 verify_client | tel=573146964611, correo=None, usuario=None
+2025-10-30 11:02:00,205 - INFO - 📤 verify_client response: {'exists': True, 'client_id': 'he55lkhj', 'nombre': '', 'telefono': 573146964611, 'correo': '', 'tipo': 'Lead', 'estado': 'Nuevo', 'canal': 'whatsapp', 'nota': '', 'usuario': 'Fordez', 'fecha_creacion': None, 'fecha_conversion': '', 'matched_by': 'telefono'}
+2025-10-30 11:02:00,209 - INFO - Processing request of type CallToolRequest
+2025-10-30 11:02:00,210 - INFO - 🔄 update_client | client_id=573146964611, fields={'Nombre': 'Fernando'}
+2025-10-30 11:02:03,278 - INFO - 📤 update_client response: {'success': True, 'client_id': 'he55lkhj', 'updated_fields': ['Nombre']}
+2025-10-30 11:02:51,582 - INFO - Created new transport with session ID: c7e4eece961e40b994ec121e6afb6e25
+2025-10-30 11:02:52,533 - INFO - Processing request of type ListToolsRequest
+2025-10-30 11:03:24,634 - INFO - Created new transport with session ID: d76c3e05bbb24f29877da58e96412358
+2025-10-30 11:03:25,511 - INFO - Processing request of type ListToolsRequest
+2025-10-30 11:16:08,787 - INFO - Created new transport with session ID: 588e99f449e24527aa7cc9aff7107ee8
+2025-10-30 11:16:09,559 - INFO - Processing request of type ListToolsRequest
+2025-10-30 11:16:15,033 - INFO - Processing request of type CallToolRequest
+2025-10-30 11:16:15,034 - INFO - 🔍 verify_client | tel=573164187556, correo=None, usuario=None
+2025-10-30 11:16:16,879 - INFO - 📤 verify_client response: {'exists': True, 'client_id': 'midrj95b', 'nombre': 'Lucy', 'telefono': 573164187556, 'correo': '', 'tipo': 'Lead', 'estado': 'Nuevo', 'canal': 'web', 'nota': '', 'usuario': 'Lucy', 'fecha_creacion': None, 'fecha_conversion': '', 'matched_by': 'telefono'}
+2025-10-30 11:16:56,572 - INFO - Created new transport with session ID: eaa9e03cf6654c0c8a728ee1a8bf387f
+2025-10-30 11:16:57,500 - INFO - Processing request of type ListToolsRequest
+2025-10-30 11:23:36,052 - INFO - Created new transport with session ID: 1936e481807f44a185df0f3e6760f752
+2025-10-30 11:23:37,781 - INFO - Processing request of type ListToolsRequest
+2025-10-30 11:24:36,366 - INFO - Created new transport with session ID: 9fba5a21993e4aa7bcc626cfc2d6794e
+2025-10-30 11:24:37,070 - INFO - Processing request of type ListToolsRequest
+2025-10-30 11:29:14,931 - INFO - Created new transport with session ID: 65bce754ed3247c6a04118e4b67ba0d1
+2025-10-30 11:29:16,162 - INFO - Processing request of type ListToolsRequest
+2025-10-30 11:30:12,339 - INFO - Created new transport with session ID: 7afeeb3f4be8439790ebb277aaf54dbf
+2025-10-30 11:30:13,414 - INFO - Processing request of type ListToolsRequest
+2025-10-30 11:30:55,702 - INFO - Created new transport with session ID: 48fa514d64624ff0965d2ed355185352
+2025-10-30 11:30:56,595 - INFO - Processing request of type ListToolsRequest
+2025-10-30 11:32:39,308 - INFO - Created new transport with session ID: 7d9122011d83493793faf86fa2408947
+2025-10-30 11:32:40,391 - INFO - Processing request of type ListToolsRequest
+2025-10-30 11:34:20,141 - INFO - StreamableHTTP session manager shutting down

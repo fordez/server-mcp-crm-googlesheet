@@ -44,21 +44,6 @@ class CRMService:
     def verify_client(telefono=None, correo=None, usuario=None) -> dict:
         """
         Verifica si un cliente existe en el CRM usando teléfono, correo o usuario.
-
-        Args:
-            telefono: Número de teléfono del cliente
-            correo: Email del cliente
-            usuario: Usuario del cliente
-
-        Returns:
-            dict: Información completa del cliente si existe, incluyendo:
-                - exists: bool indicando si el cliente existe
-                - client_id: ID único del cliente
-                - nombre, telefono, correo, tipo, estado, canal, nota, usuario
-                - fecha_creacion: Fecha de creación del registro
-                - fecha_conversion: Fecha de conversión (si aplica)
-                - thread_id: ID del hilo de conversación
-                - matched_by: Campo por el cual se encontró el cliente
         """
         try:
             if not telefono and not correo and not usuario:
@@ -98,7 +83,6 @@ class CRMService:
                         "usuario": row.get("Usuario"),
                         "fecha_creacion": row.get("Fecha Creacion"),
                         "fecha_conversion": row.get("Fecha Conversion"),
-                        "thread_id": row.get("Thread_Id"),
                         "matched_by": matched_by,
                     }
 
@@ -108,33 +92,17 @@ class CRMService:
             return {"error": str(e)}
 
     @staticmethod
-    def create_client(
+    def create_client_service(
         nombre,
         canal,
         telefono=None,
         correo=None,
         nota=None,
         usuario=None,
-        thread_id=None,
     ) -> dict:
         """
         Crea un nuevo cliente en el CRM.
-
-        Args:
-            nombre: Nombre completo del cliente (requerido)
-            canal: Canal de origen (requerido)
-            telefono: Número de teléfono del cliente
-            correo: Email del cliente
-            nota: Notas adicionales sobre el cliente
-            usuario: Usuario asociado al cliente
-            thread_id: ID del hilo de conversación
-
-        Returns:
-            dict: Información del cliente creado incluyendo:
-                - success: bool indicando si la operación fue exitosa
-                - client_id: ID único generado para el cliente
-                - nombre, canal: Datos básicos del cliente
-                - thread_id: ID del hilo asignado
+        Ya no actualiza ni valida con thread_id.
         """
         try:
             if not nombre or not canal:
@@ -143,15 +111,16 @@ class CRMService:
                     "error": "Los campos 'nombre' y 'canal' son requeridos",
                 }
 
+            # Crear cliente nuevo
             sh = gc.open_by_key(SPREADSHEET_ID)
             worksheet = sh.worksheet(SHEET_NAME)
             all_records = worksheet.get_all_records()
             tz = pytz.timezone(TIMEZONE)
             fecha_actual = datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
+
             client_id = shortuuid.ShortUUID().random(length=6)
             next_row = len(all_records) + 2
 
-            # Columnas: Id | Nombre | Telefono | Correo | Tipo | Estado | Nota | Usuario | Canal | Fecha Creacion | Fecha Conversion | Thread_Id
             worksheet.update_cell(next_row, 1, client_id)
             worksheet.update_cell(next_row, 2, nombre)
             worksheet.update_cell(next_row, 3, telefono or "")
@@ -163,14 +132,14 @@ class CRMService:
             worksheet.update_cell(next_row, 9, canal)
             worksheet.update_cell(next_row, 10, fecha_actual)
             worksheet.update_cell(next_row, 11, "")
-            worksheet.update_cell(next_row, 12, thread_id or "")
+            worksheet.update_cell(next_row, 12, "")
 
             return {
                 "success": True,
+                "created": True,
                 "client_id": client_id,
                 "nombre": nombre,
                 "canal": canal,
-                "thread_id": thread_id,
             }
 
         except Exception as e:
@@ -180,19 +149,6 @@ class CRMService:
     def update_client_dynamic(client_id: str, fields: dict) -> dict:
         """
         Actualiza campos dinámicamente de un cliente existente.
-
-        Args:
-            client_id: ID del cliente o número de teléfono
-            fields: Diccionario con los campos a actualizar
-                Campos disponibles: "Nombre", "Telefono", "Correo", "Tipo", "Estado",
-                "Nota", "Usuario", "Canal", "Fecha Creacion", "Fecha Conversion", "Thread_Id"
-                Ejemplo: {"Estado": "Activo", "Nota": "Cliente interesado"}
-
-        Returns:
-            dict: Resultado de la actualización incluyendo:
-                - success: bool indicando si la operación fue exitosa
-                - client_id: ID del cliente actualizado
-                - updated_fields: Lista de campos que fueron actualizados
         """
         try:
             if not client_id:

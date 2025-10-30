@@ -74,28 +74,33 @@ async def create_client(
     correo: Optional[str] = None,
     nota: Optional[str] = None,
     usuario: Optional[str] = None,
-    thread_id: Optional[str] = None,
     ctx: Context = None,
 ) -> dict:
     """
-    Crea un nuevo cliente en el CRM.
-    Incluye soporte para Thread_Id para vincular conversaciones.
+    Crea un nuevo cliente en el CRM (Google Sheets).
+    No actualiza registros existentes; para eso se usa `update_client`.
     """
     ctx = ctx or get_context()
     logger.info(
-        f"✨ create_client | nombre={nombre}, canal={canal}, thread_id={thread_id}"
+        f"✨ create_client | nombre={nombre}, canal={canal}, telefono={telefono}, correo={correo}"
     )
-    result = CRMService.create_client(
+
+    result = CRMService.create_client_service(
         nombre=nombre,
         canal=canal,
         telefono=telefono,
         correo=correo,
         nota=nota,
         usuario=usuario,
-        thread_id=thread_id,
     )
+
     logger.info(f"📤 create_client response: {result}")
-    return {"success": True, "data": result}
+
+    return {
+        "success": result.get("success", False),
+        "created": result.get("created", False),
+        "data": result,
+    }
 
 
 # ====================================================
