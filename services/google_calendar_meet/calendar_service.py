@@ -11,11 +11,7 @@ from google.oauth2.credentials import Credentials
 load_dotenv()
 logger = logging.getLogger(__name__)
 
-CLIENT_SECRET_FILE = os.getenv("CLIENT_SECRET_FILE", "meet-credentials.json")
-TOKEN_FILE = os.getenv("TOKEN_FILE", "token.json")
-TIMEZONE = os.getenv(
-    "TIMEZONE", "America/Argentina/Buenos_Aires"
-)  # 🔹 Zona horaria del .env
+TIMEZONE = os.getenv("TIMEZONE", "America/Argentina/Buenos_Aires")
 
 # ⚠️ Scopes fijos para Calendar/Meet
 SCOPES = [
@@ -29,18 +25,44 @@ SCOPES = [
 class CalendarService:
     _service = None
 
+    # -------------------------------------------------
+    @staticmethod
+    def get_token_path() -> str:
+        """Detecta entorno y retorna la ruta correcta del token."""
+        env = os.getenv("ENVIRONMENT", "production").lower()
+        if env == "development":
+            path = os.getenv("TOKEN_FILE_DEV", "secrets/token-dev.json")
+        else:
+            path = os.getenv("TOKEN_FILE_PROD", "secrets/token-prod.json")
+
+        logger.info(f"🧩 Entorno detectado: {env} → usando token: {path}")
+        return path
+
+    # -------------------------------------------------
     @staticmethod
     def get_credentials():
         """Carga las credenciales internas del servidor sin flujo OAuth."""
-        if not os.path.exists(TOKEN_FILE):
-            raise FileNotFoundError(
-                f"❌ No existe el token interno: {TOKEN_FILE}. Genera uno manualmente."
-            )
-        with open(TOKEN_FILE, "r") as token_file:
-            creds_data = json.load(token_file)
+        token_path = CalendarService.get_token_path()
+
+        if not os.path.exists(token_path):
+            raise FileNotFoundError(f"❌ No existe el token interno: {token_path}")
+
+        # Leer archivo y validar contenido
+        with open(token_path, "r") as token_file:
+            content = token_file.read().strip()
+            if not content:
+                raise ValueError(f"⚠️ El token {token_path} está vacío o corrupto.")
+            try:
+                creds_data = json.loads(content)
+            except json.JSONDecodeError:
+                raise ValueError(
+                    f"⚠️ El token {token_path} tiene formato JSON inválido."
+                )
+
         creds = Credentials.from_authorized_user_info(creds_data, SCOPES)
         return creds
 
+    # -------------------------------------------------
     @staticmethod
     def get_service():
         """Singleton del servicio de Calendar autenticado internamente."""
@@ -83,14 +105,13 @@ class CalendarService:
         )
         busy_slots = result["calendars"]["primary"].get("busy", [])
         if busy_slots:
-            # Hay solapamiento
             return {
                 "success": False,
                 "error": "Horario no disponible, ya existe un evento en ese rango",
                 "busy_slots": busy_slots,
             }
 
-        # Crear evento solo si está libre
+        # Crear evento
         event = {
             "summary": summary,
             "description": description or "Evento creado automáticamente con Meet.",
@@ -117,21 +138,20 @@ class CalendarService:
         )
         calendar_link = event.get("htmlLink")
 
-        # 🔹 Imprimir en consola
         logger.info(f"✅ Evento creado | ID: {event_id} | Link: {calendar_link}")
 
         return {
             "success": True,
-            "event_id": event_id,  # ID real para buscar/modificar el evento
-            "meet_link": meet_link,  # Link de Meet
-            "calendar_link": calendar_link,  # Link de Calendar
+            "event_id": event_id,
+            "meet_link": meet_link,
+            "calendar_link": calendar_link,
             "summary": event["summary"],
         }
 
     # -------------------------------------------------
     @staticmethod
     def check_availability():
-        """Retorna los espacios libres entre 8 a.m. y 5 p.m. de los próximos 3 días hábiles con disponibilidad."""
+        """Retorna los espacios libres entre 8 a.m. y 5 p.m. de los próximos 3 días hábiles."""
         service = CalendarService.get_service()
         tz = pytz.timezone(TIMEZONE)
         now = datetime.now(tz)
@@ -147,12 +167,10 @@ class CalendarService:
         offset = 0
         dias_encontrados = 0
 
-        # Buscar 3 días hábiles con huecos disponibles
         while dias_encontrados < 3 and offset < 14:
             date = now.date() + timedelta(days=offset)
 
-            # Saltar sábados (5) y domingos (6)
-            if date.weekday() >= 5:
+            if date.weekday() >= 5:  # Saltar sábados y domingos
                 offset += 1
                 continue
 
@@ -163,7 +181,6 @@ class CalendarService:
                 offset += 1
                 continue
 
-            # Consultar eventos ocupados
             result = (
                 service.freebusy()
                 .query(
@@ -183,7 +200,6 @@ class CalendarService:
             for slot in busy_slots:
                 s = datetime.fromisoformat(slot["start"]).astimezone(tz)
                 e = datetime.fromisoformat(slot["end"]).astimezone(tz)
-
                 if e <= start or s >= end_day:
                     continue
                 if current_time < s:
@@ -193,7 +209,6 @@ class CalendarService:
             if current_time < end_day:
                 free_slots.append((current_time, end_day))
 
-            # Formatear resultado
             slots_fmt = [
                 {
                     "inicio": s.strftime("%I:%M %p"),
@@ -202,7 +217,7 @@ class CalendarService:
                     "fin_iso": e.isoformat(),
                 }
                 for s, e in free_slots
-                if (e - s).total_seconds() >= 900  # mínimo 15 minutos
+                if (e - s).total_seconds() >= 900
             ]
 
             if slots_fmt:
@@ -213,12 +228,10 @@ class CalendarService:
 
         return disponibilidad
 
+    # -------------------------------------------------
     @staticmethod
     def get_event_details(event_id: str):
-        """
-        Obtiene los detalles de un evento dado su event_id.
-        Retorna información como resumen, inicio, fin, asistentes y link.
-        """
+        """Obtiene los detalles de un evento dado su event_id."""
         service = CalendarService.get_service()
         try:
             event = (
@@ -230,9 +243,7 @@ class CalendarService:
                 tz
             )
             end = datetime.fromisoformat(event["end"].get("dateTime")).astimezone(tz)
-
             attendees = [a.get("email") for a in event.get("attendees", [])]
-
             meet_link = (
                 event.get("conferenceData", {}).get("entryPoints", [{}])[0].get("uri")
             )

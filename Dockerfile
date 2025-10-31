@@ -1,26 +1,41 @@
-# Imagen base ligera
-FROM python:3.12-slim
+# Use a slim official Python image
+FROM python:3.11-slim
 
-# Establecer directorio de trabajo
+# Avoid Python writing .pyc files and buffer stdout (useful for logs)
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=off \
+    POETRY_VIRTUALENVS_CREATE=false
+
+# Cloud Run provides a PORT env var; default to 8000 for local runs
+ENV PORT=8000
+
 WORKDIR /app
 
-# Copiar dependencias e instalarlas
+# Copy requirements first (better caching)
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar el resto del código del proyecto
-COPY . .
+# Install system deps if needed (add here if your requirements need build tools)
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends build-essential curl ca-certificates \
+  && pip install --upgrade pip \
+  && pip install -r requirements.txt \
+  && apt-get remove -y build-essential \
+  && apt-get autoremove -y \
+  && rm -rf /var/lib/apt/lists/*
 
-# Copiar archivo .env (para entorno local o debug)
-# Cloud Run puede inyectar sus propias variables, pero esto asegura fallback
-COPY .env .env
+# Copy app code
+COPY . /app
 
-# Establecer variable de entorno para el puerto (Cloud Run la usa)
-ENV PORT=8080
+# Create non-root user
+RUN groupadd -r app && useradd -r -g app app \
+    && chown -R app:app /app
 
-# Exponer el puerto
-EXPOSE 8080
+USER app
 
-# Comando para ejecutar el servidor MCP
-# Aquí cargamos las variables del .env automáticamente con python-dotenv
-CMD ["bash", "-c", "export $(grep -v '^#' .env | xargs) && fastmcp run mcp.py:mcp --transport http --port ${PORT}"]
+# Expose the port (informational)
+EXPOSE 8000
+
+# Entrypoint: use PORT env var set by Cloud Run, default to 8000 locally
+# Use sh -c so env substitution ${PORT} works
+CMD ["sh", "-c", "fastmcp run mcp.py:mcp --transport http --port ${PORT:-8000}"]

@@ -1,0 +1,39 @@
+# cloudbuild.yaml
+substitutions:
+  _REGION: "southamerica-east1"
+  _REPOSITORY: "ag-crm-mcp-repo"
+  _SERVICE: "ag-crm-mcp"
+
+steps:
+  # 1) Build image with Cloud Build and push to Artifact Registry
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - build
+      - -t
+      - "$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY/$_SERVICE:$SHORT_SHA"
+      - .
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - push
+      - "$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY/$_SERVICE:$SHORT_SHA"
+
+  # 2) Deploy to Cloud Run (managed)
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - $_SERVICE
+      - --image
+      - "$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY/$_SERVICE:$SHORT_SHA"
+      - --platform
+      - managed
+      - --region
+      - "$_REGION"
+      - --allow-unauthenticated
+      # Autoscaling: por defecto Cloud Run escala a 0..N; puedes ajustar min/max con flags si quieres
+      - --set-env-vars
+      - "ENVIRONMENT=development" # ejemplo; normalmente no pongas secretos aquí
+
+images:
+  - "$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY/$_SERVICE:$SHORT_SHA"

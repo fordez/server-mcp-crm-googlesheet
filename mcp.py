@@ -229,8 +229,24 @@ async def calendar_check_availability(ctx: Context = None) -> dict:
     """
     ctx = ctx or get_context()
     logger.info("🕓 calendar_check_availability")
-    result = CalendarService.check_availability()
-    return {"success": True, "data": result}
+
+    try:
+        result = CalendarService.check_availability()
+
+        # Maneja caso None o lista vacía
+        if not result:
+            logger.warning("⚠️ CalendarService.check_availability devolvió vacío o None")
+            return {
+                "success": True,
+                "message": "No hay disponibilidad en los próximos días hábiles.",
+                "data": [],
+            }
+
+        return {"success": True, "data": result}
+
+    except Exception as e:
+        logger.exception("❌ Error en calendar_check_availability")
+        return {"success": False, "error": str(e)}
 
 
 # ====================================================
