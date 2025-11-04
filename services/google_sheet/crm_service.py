@@ -1,23 +1,31 @@
-import gspread
-from google.oauth2.service_account import Credentials
-import pytz
-from datetime import datetime
-import shortuuid
 import os
+import pytz
+import gspread
+import shortuuid
+from datetime import datetime
 from dotenv import load_dotenv
+from services.google_sheet.gspread_helper import (
+    get_gspread_client,
+)  # 👈 módulo compartido
 
 load_dotenv()
 
+# ==========================
+# 🔧 CONFIGURACIÓN
+# ==========================
 SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE", "credentials.json")
-SCOPES = [os.getenv("SCOPES", "https://www.googleapis.com/auth/spreadsheets")]
 SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
 SHEET_NAME = os.getenv("SHEET_NAME", "Lead")
 TIMEZONE = os.getenv("TIMEZONE", "America/Argentina/Buenos_Aires")
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-gc = gspread.authorize(creds)
+# Cliente gspread inicializado (maneja archivo o JSON)
+gc = get_gspread_client(SERVICE_ACCOUNT_FILE, SCOPES, service_name="CRMService")
 
 
+# ==========================
+# 💼 SERVICIO CRM
+# ==========================
 class CRMService:
     @staticmethod
     def resolve_client_id(client_id_or_phone: str) -> str | None:

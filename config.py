@@ -1,119 +1,51 @@
-"""
-Módulo de configuración para gestionar entornos de producción y desarrollo.
-Selecciona automáticamente las credenciales y configuraciones según ENVIRONMENT.
-"""
-
 import os
-from dotenv import load_dotenv
+import json
+import logging
 
-load_dotenv()
+logger = logging.getLogger(__name__)
 
 
 class Config:
-    """Clase de configuración que maneja entornos prod/dev automáticamente."""
-
     def __init__(self):
-        self.environment = os.getenv("ENVIRONMENT", "production").lower()
-        self._load_environment_config()
-
-    def _load_environment_config(self):
-        """Carga configuración según el entorno activo."""
+        self.environment = os.getenv("ENVIRONMENT", "development").lower()
         is_prod = self.environment == "production"
 
-        # ====================================================
-        # Google Sheets Configuration
-        # ====================================================
-        self.service_account_file = os.getenv(
-            f"SERVICE_ACCOUNT_FILE_{'PROD' if is_prod else 'DEV'}", "credentials.json"
-        )
-        self.spreadsheet_id = os.getenv(
-            f"SPREADSHEET_ID_{'PROD' if is_prod else 'DEV'}"
-        )
-        self.scopes = [
-            os.getenv("SCOPES", "https://www.googleapis.com/auth/spreadsheets")
-        ]
+        # SECRETOS
+        if is_prod:
+            # Leer los JSON directamente desde las variables de entorno
+            self.service_account_json = json.loads(os.getenv("SERVICE_ACCOUNT_FILE"))
+            self.client_secret_json = json.loads(os.getenv("CLIENT_SECRET_FILE"))
+            self.token_json = json.loads(os.getenv("TOKEN_FILE"))
+        else:
+            # Local/desarrollo: leer desde archivos
+            import pathlib
 
-        # Sheet names
-        self.sheet_name = os.getenv("SHEET_NAME", "Lead")
-        self.sheet_name_crm = os.getenv("SHEET_NAME_CRM", "Lead")
-        self.sheet_name_catalog = os.getenv("SHEET_NAME_CATALOG", "Services")
-        self.sheet_name_meetings = os.getenv("SHEET_NAME_MEETINGS", "Meetings")
-        self.sheet_name_projects = os.getenv("SHEET_NAME_PROJECTS", "Projects")
+            with open(
+                os.getenv("SERVICE_ACCOUNT_FILE", "secrets/credentials-dev.json")
+            ) as f:
+                self.service_account_json = json.load(f)
+            with open(
+                os.getenv("CLIENT_SECRET_FILE", "secrets/meet-credentials-dev.json")
+            ) as f:
+                self.client_secret_json = json.load(f)
+            with open(os.getenv("TOKEN_FILE", "secrets/token-dev.json")) as f:
+                self.token_json = json.load(f)
 
-        # ====================================================
-        # Google Calendar & Meet Configuration
-        # ====================================================
-        self.client_secret_file = os.getenv(
-            f"CLIENT_SECRET_FILE_{'PROD' if is_prod else 'DEV'}",
-            "meet-credentials.json",
-        )
-        self.token_file = os.getenv(
-            f"TOKEN_FILE_{'PROD' if is_prod else 'DEV'}", "token.json"
-        )
-        self.gcal_calendar_id = os.getenv(
-            f"GCAL_CALENDAR_ID_{'PROD' if is_prod else 'DEV'}"
-        )
-
-        # ====================================================
-        # Server Configuration
-        # ====================================================
-        self.mcp_server_port = int(os.getenv("MCP_SERVER_PORT", 8000))
-        self.timezone = os.getenv("TIMEZONE", "America/Argentina/Buenos_Aires")
-
-        # ====================================================
-        # Cache & Logs
-        # ====================================================
+        # Variables no sensibles desde .env
+        self.spreadsheet_id = os.getenv("SPREADSHEET_ID")
+        self.sheet_name = os.getenv("SHEET_NAME")
+        self.sheet_name_catalog = os.getenv("SHEET_NAME_CATALOG")
+        self.sheet_name_meetings = os.getenv("SHEET_NAME_MEETINGS")
+        self.sheet_name_projects = os.getenv("SHEET_NAME_PROJECTS")
+        self.scopes = [os.getenv("SCOPES")]
+        self.timezone = os.getenv("TIMEZONE")
+        self.mcp_server_port = int(os.getenv("MCP_SERVER_PORT", 8080))
         self.cache_dir = os.getenv("CACHE_DIR", "./cache")
         self.log_dir = os.getenv("LOG_DIR", "./logs")
 
-        # Crear directorios si no existen
         os.makedirs(self.cache_dir, exist_ok=True)
         os.makedirs(self.log_dir, exist_ok=True)
 
-    def is_production(self) -> bool:
-        """Verifica si el entorno actual es producción."""
-        return self.environment == "production"
 
-    def is_development(self) -> bool:
-        """Verifica si el entorno actual es desarrollo."""
-        return self.environment == "development"
-
-    def get_environment(self) -> str:
-        """Retorna el entorno actual."""
-        return self.environment
-
-    def print_config(self):
-        """Imprime la configuración actual (útil para debugging)."""
-        print("\n" + "=" * 60)
-        print(f"🔧 CONFIGURACIÓN DEL SERVIDOR MCP")
-        print("=" * 60)
-        print(f"🌍 Entorno: {self.environment.upper()}")
-        print(f"📋 Spreadsheet ID: {self.spreadsheet_id}")
-        print(f"🔑 Service Account: {self.service_account_file}")
-        print(f"📅 Calendar ID: {self.gcal_calendar_id}")
-        print(f"🔌 Puerto: {self.mcp_server_port}")
-        print(f"🕐 Timezone: {self.timezone}")
-        print(f"📂 Logs: {self.log_dir}")
-        print("=" * 60 + "\n")
-
-
-# Instancia global de configuración
+logger.info("✅ Configuración cargada correctamente")
 config = Config()
-
-
-# Función helper para obtener configuración
-def get_config() -> Config:
-    """Retorna la instancia global de configuración."""
-    return config
-
-
-# Validación de configuración al importar
-if not config.spreadsheet_id:
-    raise ValueError(
-        f"❌ ERROR: SPREADSHEET_ID_{config.environment.upper()} no está configurado en .env"
-    )
-
-if not config.gcal_calendar_id:
-    raise ValueError(
-        f"❌ ERROR: GCAL_CALENDAR_ID_{config.environment.upper()} no está configurado en .env"
-    )

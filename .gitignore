@@ -1,6 +1,5 @@
 # --- Archivos sensibles ---
-credentials.json
-meet-credentials.json
+
 token.json
 .env
 secrets/

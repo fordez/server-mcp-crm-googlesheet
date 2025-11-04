@@ -1,9 +1,11 @@
-import gspread
-from google.oauth2.service_account import Credentials
-import pytz
-from datetime import datetime
 import os
+import pytz
+import gspread
+from datetime import datetime
 from dotenv import load_dotenv
+from services.google_sheet.gspread_helper import (
+    get_gspread_client,
+)  # ✅ nuevo módulo compartido
 
 load_dotenv()
 
@@ -11,13 +13,13 @@ load_dotenv()
 # 🔧 CONFIGURACIÓN
 # ==========================
 SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE", "credentials.json")
-SCOPES = [os.getenv("SCOPES", "https://www.googleapis.com/auth/spreadsheets")]
 SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
 SHEET_NAME_PROJECTS = os.getenv("SHEET_NAME_PROJECTS", "Projects")
 TIMEZONE = os.getenv("TIMEZONE", "America/Argentina/Buenos_Aires")
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-gc = gspread.authorize(creds)
+# ✅ Cliente gspread centralizado (soporta archivo o JSON string)
+gc = get_gspread_client(SERVICE_ACCOUNT_FILE, SCOPES, service_name="ProjectService")
 
 
 # ==========================
@@ -37,23 +39,6 @@ class ProjectService:
     ) -> dict:
         """
         Crea un nuevo proyecto en la hoja de Projects.
-
-        Args:
-            nombre: Nombre del proyecto (requerido)
-            id_cliente: ID del cliente asociado (requerido)
-            servicio: Servicio relacionado con el proyecto
-            descripcion: Descripción del proyecto
-            fecha_inicio: Fecha de inicio del proyecto (formato: YYYY-MM-DD HH:MM:SS)
-            fecha_fin: Fecha estimada de fin (formato: YYYY-MM-DD HH:MM:SS)
-            estado: Estado del proyecto (default: "En Progreso")
-            nota: Notas adicionales sobre el proyecto
-
-        Returns:
-            dict: Información del proyecto creado incluyendo:
-                - success: bool indicando si la operación fue exitosa
-                - project_id: ID único generado para el proyecto
-                - nombre, id_cliente, estado: Datos básicos del proyecto
-                - fecha_creada: Timestamp de creación
         """
         try:
             if not nombre or not id_cliente:
@@ -69,11 +54,9 @@ class ProjectService:
             tz = pytz.timezone(TIMEZONE)
             fecha_creada = datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
 
-            # Generar ID único basado en timestamp
             project_id = f"PRJ-{datetime.now(tz).strftime('%Y%m%d%H%M%S')}"
             next_row = len(all_records) + 2
 
-            # Columnas: Id | Nombre | Descripcion | Servicio | Estado | Nota | Fecha_Inicio | Fecha_Fin | Id_Cliente
             worksheet.update_cell(next_row, 1, project_id)
             worksheet.update_cell(next_row, 2, nombre)
             worksheet.update_cell(next_row, 3, descripcion or "")
@@ -101,15 +84,7 @@ class ProjectService:
     # ==========================
     @staticmethod
     def get_project_by_id(project_id: str) -> dict:
-        """
-        Consulta un proyecto específico por su ID.
-
-        Args:
-            project_id: ID único del proyecto
-
-        Returns:
-            dict: Información completa del proyecto o error si no existe
-        """
+        """Consulta un proyecto específico por su ID."""
         try:
             if not project_id:
                 return {"success": False, "error": "project_id requerido"}
@@ -132,15 +107,7 @@ class ProjectService:
 
     @staticmethod
     def get_projects_by_client(id_cliente: str) -> dict:
-        """
-        Consulta todos los proyectos asociados a un cliente específico.
-
-        Args:
-            id_cliente: ID del cliente
-
-        Returns:
-            dict: Lista de proyectos del cliente con conteo total
-        """
+        """Consulta todos los proyectos asociados a un cliente específico."""
         try:
             if not id_cliente:
                 return {"success": False, "error": "id_cliente requerido"}
@@ -162,15 +129,7 @@ class ProjectService:
 
     @staticmethod
     def get_projects_by_date(fecha_inicio: str) -> dict:
-        """
-        Consulta proyectos por fecha de inicio.
-
-        Args:
-            fecha_inicio: Fecha en formato YYYY-MM-DD
-
-        Returns:
-            dict: Lista de proyectos que inician en la fecha especificada
-        """
+        """Consulta proyectos por fecha de inicio."""
         try:
             if not fecha_inicio:
                 return {"success": False, "error": "fecha_inicio requerida"}
@@ -201,19 +160,7 @@ class ProjectService:
     # ==========================
     @staticmethod
     def update_project(project_id: str, fields: dict) -> dict:
-        """
-        Actualiza campos de un proyecto existente.
-
-        Args:
-            project_id: ID del proyecto a actualizar
-            fields: Diccionario con los campos a actualizar
-                Campos disponibles: "Nombre", "Descripcion", "Servicio", "Estado",
-                "Nota", "Fecha_Inicio", "Fecha_Fin", "Id_Cliente"
-                Ejemplo: {"Estado": "Completado", "Nota": "Proyecto finalizado exitosamente"}
-
-        Returns:
-            dict: Resultado de la actualización con lista de campos modificados
-        """
+        """Actualiza campos de un proyecto existente."""
         try:
             if not project_id:
                 return {"success": False, "error": "project_id requerido"}
@@ -258,16 +205,7 @@ class ProjectService:
 
     @staticmethod
     def update_project_note_by_client(id_cliente: str, nota: str) -> dict:
-        """
-        Actualiza la nota de todos los proyectos asociados a un cliente.
-
-        Args:
-            id_cliente: ID del cliente cuyos proyectos se actualizarán
-            nota: Nueva nota a agregar a todos los proyectos del cliente
-
-        Returns:
-            dict: Resultado indicando cuántos proyectos fueron actualizados
-        """
+        """Actualiza la nota de todos los proyectos asociados a un cliente."""
         try:
             if not id_cliente:
                 return {"success": False, "error": "id_cliente requerido"}
@@ -283,7 +221,7 @@ class ProjectService:
 
             for idx, row in enumerate(all_records, start=2):
                 if str(row.get("Id_Cliente")) == str(id_cliente):
-                    worksheet.update_cell(idx, 6, nota)  # Columna 6 = Nota
+                    worksheet.update_cell(idx, 6, nota)
                     updated_count += 1
                     updated_projects.append(row.get("Id"))
 
@@ -306,15 +244,7 @@ class ProjectService:
 
     @staticmethod
     def delete_project(project_id: str) -> dict:
-        """
-        Elimina un proyecto de la hoja de Projects.
-
-        Args:
-            project_id: ID del proyecto a eliminar
-
-        Returns:
-            dict: Confirmación de eliminación o error si no existe
-        """
+        """Elimina un proyecto de la hoja de Projects."""
         try:
             if not project_id:
                 return {"success": False, "error": "project_id requerido"}

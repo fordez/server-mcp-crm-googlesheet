@@ -3,7 +3,7 @@ from fastmcp.server.dependencies import get_context
 from services.google_sheet.crm_service import CRMService
 from services.google_sheet.catalog_service import CatalogService
 from services.google_sheet.meeting_service import MeetingService
-from services.google_sheet.project_service import ProjectService  # 👈 NUEVO
+from services.google_sheet.project_service import ProjectService
 from services.google_calendar_meet.calendar_service import CalendarService
 import os
 import logging
@@ -17,27 +17,42 @@ from datetime import datetime
 load_dotenv()
 
 # ====================================================
-# 🧾 Logging
+# 🧾 Logging (AJUSTADO PARA CLOUD RUN)
 # ====================================================
-log_dir = os.getenv("LOG_DIR", "./logs")
-os.makedirs(log_dir, exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler(f"{log_dir}/mcp_server.log"),
-        logging.StreamHandler(),
+        logging.StreamHandler(),  # Envía logs a la consola (Stdout/Stderr)
     ],
 )
 logger = logging.getLogger(__name__)
 
 # ====================================================
+# ✅ VERIFICACIÓN DE INICIALIZACIÓN
+# ====================================================
+try:
+    logger.info("🔍 Verificando servicios...")
+
+    # Verificar que las clases de servicio se pueden importar
+    _ = CRMService
+    _ = CatalogService
+    _ = MeetingService
+    _ = ProjectService
+    _ = CalendarService
+
+    logger.info("✅ Todos los servicios importados correctamente")
+
+except Exception as e:
+    logger.error(f"❌ Error al importar servicios: {e}", exc_info=True)
+    raise
+
+# ====================================================
 # 🚀 Inicializar MCP
 # ====================================================
-mcp = FastMCP(name="CRM + Catalog + Meetings + Projects Server")
+mcp = FastMCP(name="ag-crm-mcp")
 
 
-# ====================================================
 # -----------------------
 # TOOL 1: VERIFY CLIENT
 # -----------------------
@@ -260,23 +275,40 @@ async def calendar_create_meet(
     end_time: str,
     attendees: Optional[List[str]] = None,
     description: Optional[str] = None,
+    id_cliente: str = None,
     ctx: Context = None,
 ) -> dict:
-    """
-    Crea un evento de Google Meet en el calendario.
-    """
     ctx = ctx or get_context()
     logger.info(f"📅 calendar_create_meet | summary={summary}")
+
     start_dt = datetime.fromisoformat(start_time)
     end_dt = datetime.fromisoformat(end_time)
-    meet_link = CalendarService.create_meet_event(
+
+    event_data = CalendarService.create_meet_event(
         summary=summary,
         start_time=start_dt,
         end_time=end_dt,
         attendees=attendees,
         description=description,
     )
-    return {"success": True, "data": meet_link}
+
+    if not event_data.get("success"):
+        return {"success": False, "error": event_data.get("error")}
+
+    # Guardar evento en Sheets
+    sheet_result = MeetingService.create_meeting(
+        event_id=event_data["event_id"],
+        asunto=event_data["summary"],
+        fecha_inicio=event_data["start_time"],
+        id_cliente=id_cliente,
+        detalles=event_data.get("description"),
+        meet_link=event_data.get("meet_link"),
+        calendar_link=event_data.get("calendar_link"),
+        estado=event_data.get("estado", "Programada"),
+    )
+
+    logger.info(f"📤 create_meeting_sheet response: {sheet_result}")
+    return {"success": sheet_result["success"], "data": sheet_result}
 
 
 # ====================================================
@@ -297,52 +329,6 @@ async def calendar_get_event_details(event_id: str, ctx: Context = None) -> dict
 # ====================================================
 # 📅 MEETINGS MANAGEMENT TOOLS
 # ====================================================
-
-
-# -----------------------
-# TOOL 11: CREATE MEETING
-# -----------------------
-@mcp.tool()
-async def create_meeting_sheet(
-    asunto: str,
-    fecha_inicio: str,
-    id_cliente: str,
-    detalles: Optional[str] = None,
-    meet_link: Optional[str] = None,
-    calendar_id: Optional[str] = None,
-    estado: Optional[str] = "Programada",
-    ctx: Context = None,
-) -> dict:
-    """
-    Crea una nueva reunión en la hoja de Meetings.
-
-    Args:
-        asunto: Título o asunto de la reunión
-        fecha_inicio: Fecha y hora de inicio (formato ISO: YYYY-MM-DD HH:MM:SS)
-        id_cliente: ID del cliente asociado
-        detalles: Descripción o detalles adicionales (opcional)
-        meet_link: Link de Google Meet (opcional)
-        calendar_id: ID del evento en Google Calendar (opcional)
-        estado: Estado de la reunión (default: "Programada")
-    """
-    ctx = ctx or get_context()
-    logger.info(f"📝 create_meeting | asunto={asunto}, cliente={id_cliente}")
-
-    try:
-        result = MeetingService.create_meeting(
-            asunto=asunto,
-            fecha_inicio=fecha_inicio,
-            id_cliente=id_cliente,
-            detalles=detalles,
-            meet_link=meet_link,
-            calendar_id=calendar_id,
-            estado=estado,
-        )
-        logger.info(f"📤 create_meeting response: {result}")
-        return {"success": True, "data": result}
-    except Exception as e:
-        logger.error(f"❌ create_meeting error: {str(e)}", exc_info=True)
-        return {"success": False, "error": str(e)}
 
 
 # -----------------------
@@ -690,9 +676,25 @@ async def delete_project_sheet(project_id: str, ctx: Context = None) -> dict:
 # ====================================================
 # 🚀 RUN SERVER
 # ====================================================
-if __name__ == "__main__":
-    import uvicorn
 
-    port = int(os.getenv("MCP_SERVER_PORT", 8000))
-    logger.info(f"🚀 Iniciando MCP Server en puerto {port}...")
-    uvicorn.run("mcp_server:app", host="0.0.0.0", port=port, log_level="info")
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 8080))
+    environment = os.getenv("ENVIRONMENT", "development")
+
+    logger.info("=" * 50)
+    logger.info(f"🚀 Starting AG-CRM MCP Server")
+    logger.info(f"   Environment: {environment}")
+    logger.info(f"   Port: {port}")
+    logger.info(f"   Host: 0.0.0.0")
+    logger.info("=" * 50)
+
+    try:
+        # Inicia el servidor FastMCP
+        mcp.run(
+            transport="http",
+            host="0.0.0.0",
+            port=port,
+        )
+    except Exception as e:
+        logger.error(f"❌ Failed to start server: {e}", exc_info=True)
+        raise

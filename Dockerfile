@@ -1,41 +1,53 @@
-# Use a slim official Python image
+# ====================================================
+# 🐍 Base image
+# ====================================================
 FROM python:3.11-slim
 
-# Avoid Python writing .pyc files and buffer stdout (useful for logs)
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=off \
-    POETRY_VIRTUALENVS_CREATE=false
-
-# Cloud Run provides a PORT env var; default to 8000 for local runs
-ENV PORT=8000
+    PYTHONPATH=/app \
+    PORT=8080 \
+    PYTHONFAULTHANDLER=1
 
 WORKDIR /app
 
-# Copy requirements first (better caching)
-COPY requirements.txt .
-
-# Install system deps if needed (add here if your requirements need build tools)
+# ====================================================
+# 📦 Instalar dependencias del sistema
+# ====================================================
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends build-essential curl ca-certificates \
-  && pip install --upgrade pip \
-  && pip install -r requirements.txt \
-  && apt-get remove -y build-essential \
-  && apt-get autoremove -y \
-  && rm -rf /var/lib/apt/lists/*
+ && apt-get install -y --no-install-recommends \
+    gcc g++ build-essential curl ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 
-# Copy app code
+# ====================================================
+# 📥 Copiar e instalar dependencias de Python
+# ====================================================
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -U pip \
+ && pip install --no-cache-dir -r /app/requirements.txt
+
+# ====================================================
+# 📂 Copiar código fuente
+# ====================================================
 COPY . /app
 
-# Create non-root user
-RUN groupadd -r app && useradd -r -g app app \
-    && chown -R app:app /app
+# Crear directorios necesarios
+RUN mkdir -p /tmp /app/cache /app/logs \
+ && chmod 777 /tmp /app/cache /app/logs
 
+# ====================================================
+# 👤 Usuario no-root
+# ====================================================
+RUN groupadd -r app && useradd -r -g app app \
+ && chown -R app:app /app /tmp
 USER app
 
-# Expose the port (informational)
-EXPOSE 8000
+# ====================================================
+# 🚀 Entrada
+# ====================================================
+EXPOSE 8080
 
-# Entrypoint: use PORT env var set by Cloud Run, default to 8000 locally
-# Use sh -c so env substitution ${PORT} works
-CMD ["sh", "-c", "fastmcp run mcp.py:mcp --transport http --port ${PORT:-8000}"]
+CMD echo "🚀 Starting AG-CRM MCP Server..." && \
+    echo "PORT=$PORT" && \
+    echo "ENVIRONMENT=$ENVIRONMENT" && \
+    python main.py

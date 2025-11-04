@@ -3671,3 +3671,9 @@ json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
 2025-10-31 06:22:31,972 - INFO - 🔍 verify_client | tel=573164187556, correo=None, usuario=None
 2025-10-31 06:22:32,824 - INFO - 📤 verify_client response: {'exists': True, 'client_id': 'oeqtr2ox', 'nombre': 'Jaime', 'telefono': 573164187556, 'correo': '', 'tipo': 'Lead', 'estado': 'Nuevo', 'canal': 'web', 'nota': '', 'usuario': 'Jaime', 'fecha_creacion': None, 'fecha_conversion': '', 'matched_by': 'telefono'}
 2025-10-31 07:32:41,007 - INFO - StreamableHTTP session manager shutting down
+2025-10-31 09:42:52,592 - INFO - StreamableHTTP session manager started
+2025-10-31 09:42:54,904 - INFO - StreamableHTTP session manager shutting down
+2025-10-31 10:02:22,698 - INFO - StreamableHTTP session manager started
+2025-10-31 10:08:03,758 - INFO - StreamableHTTP session manager shutting down
+2025-10-31 10:08:06,865 - INFO - StreamableHTTP session manager started
+2025-10-31 10:08:10,685 - INFO - StreamableHTTP session manager shutting down

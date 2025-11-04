@@ -1,23 +1,27 @@
-import gspread
-from google.oauth2.service_account import Credentials
+import logging
 import pytz
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+from services.google_sheet.gspread_helper import get_gspread_client
 
 load_dotenv()
 
 # ==========================
 # 🔧 CONFIGURACIÓN
 # ==========================
-SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE", "credentials.json")
-SCOPES = [os.getenv("SCOPES", "https://www.googleapis.com/auth/spreadsheets")]
+SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE", "secrets/credentials.json")
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
 SHEET_NAME_MEETINGS = os.getenv("SHEET_NAME_MEETINGS", "Meetings")
 TIMEZONE = os.getenv("TIMEZONE", "America/Argentina/Buenos_Aires")
 
-creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-gc = gspread.authorize(creds)
+# Logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# Inicializar cliente global con helper
+gc = get_gspread_client(SERVICE_ACCOUNT_FILE, SCOPES, "MeetingService")
 
 
 # ==========================
@@ -26,7 +30,7 @@ gc = gspread.authorize(creds)
 class MeetingService:
     @staticmethod
     def create_meeting(
-        calendar_id: str,
+        event_id: str,
         asunto: str,
         fecha_inicio: str,
         id_cliente: str,
@@ -35,55 +39,70 @@ class MeetingService:
         calendar_link: str = None,
         estado: str = "Programada",
     ) -> dict:
-        """
-        Crea una nueva reunión en la hoja de Meetings.
-        Usa el calendar_id como ID principal.
-        """
+        """Crea una nueva reunión en Google Sheets usando el Event ID de Calendar."""
         try:
-            if not calendar_id or not asunto or not fecha_inicio or not id_cliente:
+            if not event_id or not asunto or not fecha_inicio or not id_cliente:
                 return {
                     "success": False,
-                    "error": "Campos requeridos: calendar_id, asunto, fecha_inicio e id_cliente",
+                    "error": "Campos requeridos: event_id, asunto, fecha_inicio e id_cliente",
                 }
 
             sh = gc.open_by_key(SPREADSHEET_ID)
             worksheet = sh.worksheet(SHEET_NAME_MEETINGS)
             all_records = worksheet.get_all_records()
-
-            tz = pytz.timezone(TIMEZONE)
-            fecha_creada = datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
             next_row = len(all_records) + 2
 
-            # Columnas: Id | Asunto | Detalles | Fecha Inicio | Meet_Link | Calendar_Link | Estado | Fecha Creada | Id Cliente
-            worksheet.update_cell(next_row, 1, calendar_id)
+            tz = pytz.timezone(TIMEZONE)
+            fecha_creada = datetime.now(tz).strftime("%d/%m/%Y %H:%M")  # más legible
+
+            # Convertir fecha_inicio y forzar zona horaria
+            try:
+                fecha_inicio_dt = datetime.fromisoformat(fecha_inicio)
+                if fecha_inicio_dt.tzinfo is None:
+                    fecha_inicio_dt = tz.localize(fecha_inicio_dt)
+            except ValueError:
+                fecha_inicio_dt = datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S")
+                fecha_inicio_dt = tz.localize(fecha_inicio_dt)
+
+            fecha_inicio_formatted = fecha_inicio_dt.strftime(
+                "%d/%m/%Y %H:%M"
+            )  # legible
+
+            # Actualizar hoja
+            worksheet.update_cell(next_row, 1, event_id)
             worksheet.update_cell(next_row, 2, asunto)
             worksheet.update_cell(next_row, 3, detalles or "")
-            worksheet.update_cell(next_row, 4, fecha_inicio)
+            worksheet.update_cell(next_row, 4, fecha_inicio_formatted)
             worksheet.update_cell(next_row, 5, meet_link or "")
             worksheet.update_cell(next_row, 6, calendar_link or "")
             worksheet.update_cell(next_row, 7, estado)
             worksheet.update_cell(next_row, 8, fecha_creada)
             worksheet.update_cell(next_row, 9, id_cliente)
 
+            logger.info(f"✅ Reunión creada: {event_id} - {asunto}")
+
             return {
                 "success": True,
-                "calendar_id": calendar_id,
+                "event_id": event_id,
                 "asunto": asunto,
-                "fecha_inicio": fecha_inicio,
+                "fecha_inicio": fecha_inicio_formatted,
                 "id_cliente": id_cliente,
+                "detalles": detalles,
+                "meet_link": meet_link,
+                "calendar_link": calendar_link,
                 "estado": estado,
                 "fecha_creada": fecha_creada,
             }
 
         except Exception as e:
+            logger.error(f"Error en create_meeting: {e}", exc_info=True)
             return {"success": False, "error": str(e)}
 
-    # ==========================
-    # 🔍 CONSULTAS
-    # ==========================
+    # -------------------------
+    # 🔍 Consultas
+    # -------------------------
     @staticmethod
     def get_meeting_by_id(calendar_id: str) -> dict:
-        """Consulta una reunión por su ID (Calendar ID)."""
         try:
             if not calendar_id:
                 return {"success": False, "error": "calendar_id requerido"}
@@ -102,11 +121,11 @@ class MeetingService:
             }
 
         except Exception as e:
+            logger.error(f"Error en get_meeting_by_id: {e}", exc_info=True)
             return {"success": False, "error": str(e)}
 
     @staticmethod
     def get_meetings_by_client(id_cliente: str) -> dict:
-        """Consulta todas las reuniones de un cliente específico."""
         try:
             if not id_cliente:
                 return {"success": False, "error": "id_cliente requerido"}
@@ -124,11 +143,11 @@ class MeetingService:
             return {"success": True, "count": len(meetings), "meetings": meetings}
 
         except Exception as e:
+            logger.error(f"Error en get_meetings_by_client: {e}", exc_info=True)
             return {"success": False, "error": str(e)}
 
     @staticmethod
     def get_meetings_by_date(fecha_inicio: str) -> dict:
-        """Consulta reuniones por fecha de inicio."""
         try:
             if not fecha_inicio:
                 return {"success": False, "error": "fecha_inicio requerida"}
@@ -152,14 +171,14 @@ class MeetingService:
             }
 
         except Exception as e:
+            logger.error(f"Error en get_meetings_by_date: {e}", exc_info=True)
             return {"success": False, "error": str(e)}
 
-    # ==========================
-    # ✏️ ACTUALIZAR / ELIMINAR
-    # ==========================
+    # -------------------------
+    # ✏️ Actualizar / Eliminar
+    # -------------------------
     @staticmethod
     def update_meeting(calendar_id: str, fields: dict) -> dict:
-        """Actualiza campos de una reunión usando el Calendar ID."""
         try:
             if not calendar_id:
                 return {"success": False, "error": "calendar_id requerido"}
@@ -188,6 +207,7 @@ class MeetingService:
                         col = col_map.get(key)
                         if col:
                             worksheet.update_cell(idx, col, value)
+                    logger.info(f"✅ Reunión actualizada: {calendar_id}")
                     return {
                         "success": True,
                         "calendar_id": calendar_id,
@@ -200,11 +220,11 @@ class MeetingService:
             }
 
         except Exception as e:
+            logger.error(f"Error en update_meeting: {e}", exc_info=True)
             return {"success": False, "error": str(e)}
 
     @staticmethod
     def delete_meeting(calendar_id: str) -> dict:
-        """Elimina una reunión usando el Calendar ID."""
         try:
             if not calendar_id:
                 return {"success": False, "error": "calendar_id requerido"}
@@ -216,6 +236,7 @@ class MeetingService:
             for idx, row in enumerate(all_records, start=2):
                 if str(row.get("Id")) == str(calendar_id):
                     worksheet.delete_rows(idx)
+                    logger.info(f"🗑️ Reunión eliminada: {calendar_id}")
                     return {
                         "success": True,
                         "message": f"Reunión '{calendar_id}' eliminada",
@@ -227,4 +248,5 @@ class MeetingService:
             }
 
         except Exception as e:
+            logger.error(f"Error en delete_meeting: {e}", exc_info=True)
             return {"success": False, "error": str(e)}
